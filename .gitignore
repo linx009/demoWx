@@ -1,0 +1,16 @@
+unpackage/
+node_modules/
+*.log
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.tmp
+*.temp
+.hbuilder
+.hbuilderx
+.idea
+.vscode
+*.suo
+*.user
+*.sln
