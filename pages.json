@@ -36,29 +36,23 @@
 		"selectedColor": "#0052D9",
 		"backgroundColor": "#ffffff",
 		"borderStyle": "black",
+		"fontSize": "16px",
+		"height": "60px",
 		"list": [
 			{
 				"pagePath": "pages/index/index",
-				"iconPath": "static/tabbar/home.png",
-				"selectedIconPath": "static/tabbar/home-active.png",
 				"text": "鱼讯"
 			},
 			{
 				"pagePath": "pages/contacts/index",
-				"iconPath": "static/tabbar/pond.png",
-				"selectedIconPath": "static/tabbar/pond-active.png",
 				"text": "联系人"
 			},
 			{
 				"pagePath": "pages/apps/index",
-				"iconPath": "static/tabbar/pond.png",
-				"selectedIconPath": "static/tabbar/pond-active.png",
 				"text": "工具"
 			},
 			{
 				"pagePath": "pages/profile/index",
-				"iconPath": "static/tabbar/profile.png",
-				"selectedIconPath": "static/tabbar/profile-active.png",
 				"text": "我的"
 			}
 		]
