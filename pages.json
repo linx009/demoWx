@@ -15,7 +15,7 @@
 		{
 			"path": "pages/apps/index",
 			"style": {
-				"navigationBarTitleText": "应用"
+				"navigationBarTitleText": "工具"
 			}
 		},
 		{
@@ -53,7 +53,7 @@
 				"pagePath": "pages/apps/index",
 				"iconPath": "static/tabbar/pond.png",
 				"selectedIconPath": "static/tabbar/pond-active.png",
-				"text": "应用"
+				"text": "工具"
 			},
 			{
 				"pagePath": "pages/profile/index",
