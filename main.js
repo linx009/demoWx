@@ -1,5 +1,5 @@
 import App from './App'
-import TDesign from 'tdesign-miniprogram'
+import * as TDesign from 'tdesign-miniprogram'
 
 // #ifndef VUE3
 import Vue from 'vue'
