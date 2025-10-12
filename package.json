@@ -1,0 +1,27 @@
+{
+  "name": "demowx",
+  "version": "1.0.0",
+  "description": "uni-app微信小程序项目",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/linx009/demoWx.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/linx009/demoWx/issues"
+  },
+  "homepage": "https://github.com/linx009/demoWx#readme",
+  "dependencies": {
+    "@dcloudio/uni-app": "^2.0.2-4070620250821001",
+    "@dcloudio/uni-mp-weixin": "^2.0.2-4070620250821001",
+    "tdesign-miniprogram": "^1.10.1",
+    "tslib": "^2.8.1",
+    "vue": "^2.6.14"
+  }
+}
