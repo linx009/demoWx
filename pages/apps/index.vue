@@ -113,7 +113,7 @@ export default {
 <style scoped>
 .container {
 	padding: 40rpx;
-	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	background-color: #f7f7f7;
 	min-height: 100vh;
 }
 
@@ -126,14 +126,14 @@ export default {
 	display: block;
 	font-size: 48rpx;
 	font-weight: bold;
-	color: white;
+	color: #333333;
 	margin-bottom: 20rpx;
 }
 
 .subtitle {
 	display: block;
 	font-size: 28rpx;
-	color: rgba(255, 255, 255, 0.8);
+	color: #666666;
 }
 
 .icon-section {
@@ -143,10 +143,10 @@ export default {
 .section-title {
 	font-size: 32rpx;
 	font-weight: bold;
-	color: white;
+	color: #333333;
 	margin-bottom: 30rpx;
 	padding-left: 20rpx;
-	border-left: 6rpx solid rgba(255, 255, 255, 0.8);
+	border-left: 6rpx solid #07c160;
 }
 
 .icon-grid {
@@ -156,19 +156,18 @@ export default {
 }
 
 .icon-item {
-	background: rgba(255, 255, 255, 0.95);
-	border-radius: 20rpx;
+	background: #ffffff;
+	border-radius: 12rpx;
 	padding: 30rpx 20rpx;
 	text-align: center;
-	box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
-	backdrop-filter: blur(10rpx);
-	border: 1rpx solid rgba(255, 255, 255, 0.2);
+	box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+	border: 1rpx solid #e5e5e5;
 	transition: all 0.3s ease;
 }
 
 .icon-item:active {
-	transform: translateY(2rpx);
-	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+	transform: translateY(1rpx);
+	box-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.1);
 }
 
 .icon-name {

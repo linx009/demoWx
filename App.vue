@@ -24,7 +24,7 @@ export default {
 <style>
 	/* 全局样式重置 */
 	page {
-		background-color: #f8f9fa;
+		background-color: #f7f7f7;
 		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 		line-height: 1.6;
 		color: #333;
@@ -37,66 +37,54 @@ export default {
 	/* 全局容器样式 */
 	.container {
 		min-height: 100vh;
-		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		background-color: #f7f7f7;
 		position: relative;
-	}
-	
-	.container::before {
-		content: '';
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-		z-index: -1;
 	}
 	
 	/* 卡片样式 */
 	.card {
-		background: rgba(255, 255, 255, 0.95);
+		background: #ffffff;
 		border-radius: 20rpx;
-		box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
-		backdrop-filter: blur(10rpx);
-		border: 1rpx solid rgba(255, 255, 255, 0.2);
+		box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+		border: 1rpx solid #e5e5e5;
 	}
 	
 	/* 按钮样式 */
 	.btn-primary {
-		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		background: #07c160;
 		color: white;
 		border: none;
-		border-radius: 50rpx;
+		border-radius: 8rpx;
 		padding: 24rpx 48rpx;
 		font-size: 28rpx;
 		font-weight: 600;
-		box-shadow: 0 4rpx 16rpx rgba(102, 126, 234, 0.4);
+		box-shadow: 0 2rpx 8rpx rgba(7, 193, 96, 0.3);
 		transition: all 0.3s ease;
 	}
 	
 	.btn-primary:active {
-		transform: translateY(2rpx);
-		box-shadow: 0 2rpx 8rpx rgba(102, 126, 234, 0.4);
+		transform: translateY(1rpx);
+		box-shadow: 0 1rpx 4rpx rgba(7, 193, 96, 0.3);
 	}
 	
 	/* 输入框样式 */
 	.input-modern {
-		background: rgba(255, 255, 255, 0.9);
-		border: 2rpx solid rgba(102, 126, 234, 0.2);
-		border-radius: 16rpx;
+		background: #ffffff;
+		border: 1rpx solid #e5e5e5;
+		border-radius: 8rpx;
 		padding: 24rpx 32rpx;
 		font-size: 28rpx;
 		transition: all 0.3s ease;
 	}
 	
 	.input-modern:focus {
-		border-color: #667eea;
-		box-shadow: 0 0 0 6rpx rgba(102, 126, 234, 0.1);
+		border-color: #07c160;
+		box-shadow: 0 0 0 2rpx rgba(7, 193, 96, 0.1);
 	}
 	
 	/* 文字样式 */
 	.text-primary {
-		color: #667eea;
+		color: #07c160;
 	}
 	
 	.text-secondary {
@@ -150,9 +138,9 @@ export default {
 		display: inline-block;
 		width: 40rpx;
 		height: 40rpx;
-		border: 4rpx solid rgba(102, 126, 234, 0.3);
+		border: 4rpx solid rgba(7, 193, 96, 0.3);
 		border-radius: 50%;
-		border-top-color: #667eea;
+		border-top-color: #07c160;
 		animation: spin 1s ease-in-out infinite;
 	}
 	

@@ -28,4 +28,36 @@ export default {
 </script>
 
 <style>
+.container {
+  min-height: 100vh;
+  background-color: #f7f7f7;
+  padding: 20rpx;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 12rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+  border: 1rpx solid #e5e5e5;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-primary {
+  color: #07c160;
+}
+
+.text-secondary {
+  color: #666666;
+}
+
+.mt-3 {
+  margin-top: 48rpx;
+}
+
+.p-3 {
+  padding: 48rpx;
+}
 </style>
