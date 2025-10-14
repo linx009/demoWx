@@ -16,15 +16,23 @@
 					<text class="search-placeholder">搜索鱼塘、地点...</text>
 				</view>
 				
-				<!-- 右上角关注按钮 -->
-				<view class="follow-btn" @click="handleFollow">
-					<text class="follow-icon" :class="{ 'followed': isFollowed }">
-						{{ isFollowed ? '✓' : '+' }}
-					</text>
-					<text class="follow-text">{{ isFollowed ? '已关注' : '关注' }}</text>
+				<!-- 右上角关注下拉菜单 -->
+				<view class="follow-dropdown" @click="toggleFollowDropdown">
+					<text class="follow-text">关注</text>
+					<text class="dropdown-icon" :class="{ 'open': showFollowDropdown }">▼</text>
+					<!-- 下拉菜单 -->
+					<view class="dropdown-menu" :class="{ 'show': showFollowDropdown }" @click.stop>
+						<view class="dropdown-item" @click="selectFollowOption('frequent')">
+							<text>经常浏览</text>
+						</view>
+						<view class="dropdown-item" @click="selectFollowOption('recent')">
+							<text>最近更新</text>
+						</view>
+					</view>
 				</view>
 			</view>
 		</view>
+
 
 		<!-- 信息显示区域 -->
 		<view class="content-area">
@@ -90,6 +98,9 @@ const userInfo = ref(null)
 const isFollowed = ref(false)
 const currentCity = ref('')
 
+// 下拉菜单状态
+const showFollowDropdown = ref(false)
+
 // 鱼塘数据
 const pondList = ref([
 	{
@@ -138,12 +149,18 @@ const pondList = ref([
 	}
 ])
 
-// 关注功能
-const handleFollow = () => {
-	isFollowed.value = !isFollowed.value
+
+// 下拉菜单功能
+const toggleFollowDropdown = () => {
+	showFollowDropdown.value = !showFollowDropdown.value
+}
+
+// 选择关注选项
+const selectFollowOption = (option) => {
+	showFollowDropdown.value = false
 	uni.showToast({
-		title: isFollowed.value ? '已关注' : '取消关注',
-		icon: 'success'
+		title: `选择了：${option === 'frequent' ? '经常浏览' : '最近更新'}`,
+		icon: 'none'
 	})
 }
 
@@ -173,17 +190,6 @@ const handleLocation = () => {
 	}, 1500)
 }
 
-// 跳转到鱼塘详情页
-const goToPondDetail = (pond) => {
-	uni.showToast({
-		title: `进入${pond.name}详情页`,
-		icon: 'none'
-	})
-	// 这里可以跳转到详情页
-	// uni.navigateTo({
-	//   url: `/pages/pond/detail?id=${pond.id}`
-	// })
-}
 
 onMounted(() => {
 	// 页面加载时检查登录状态
@@ -205,13 +211,13 @@ onMounted(() => {
 .container {
 	padding: 0;
 	min-height: 100vh;
-	background-color: #e8e8e8;
+	background-color: #fbfbfb;
 	position: relative;
 }
 
 /* 导航栏 */
 .navbar {
-	background: #ffffff;
+	background: #fbfbfb;
 	padding: 20rpx 30rpx;
 	box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
 	position: sticky;
@@ -226,35 +232,79 @@ onMounted(() => {
 	gap: 20rpx;
 }
 
-/* 关注按钮 */
-.follow-btn {
+/* 关注下拉菜单 */
+.follow-dropdown {
+	position: relative;
 	display: flex;
 	align-items: center;
-	gap: 8rpx;
+	gap: 4rpx;
 	padding: 12rpx 20rpx;
-	background: #f8f8f8;
+	background: transparent;
 	border-radius: 20rpx;
-	border: 1rpx solid #e5e5e5;
-	transition: all 0.3s ease;
+	border: none;
+	cursor: pointer;
 }
 
-.follow-btn:active {
+.follow-dropdown:active {
 	transform: scale(0.95);
 }
 
-.follow-icon {
-	font-size: 24rpx;
-	font-weight: bold;
-	color: #07c160;
-}
-
-.follow-icon.followed {
-	color: #ff4757;
-}
-
 .follow-text {
-	font-size: 24rpx;
+	font-size: 28rpx;
+	color: #07c160;
+	font-weight: 600;
+}
+
+.dropdown-icon {
+	font-size: 16rpx;
+	color: #07c160;
+	transition: transform 0.3s ease;
+}
+
+.dropdown-icon.open {
+	transform: rotate(180deg);
+}
+
+/* 下拉菜单 */
+.dropdown-menu {
+	position: absolute;
+	top: 100%;
+	right: 0;
+	background: #ffffff;
+	border-radius: 12rpx;
+	box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.15);
+	z-index: 1000;
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(-10rpx);
+	transition: all 0.3s ease;
+	min-width: 200rpx;
+	margin-top: 8rpx;
+}
+
+.dropdown-menu.show {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+}
+
+.dropdown-item {
+	padding: 20rpx 32rpx;
+	font-size: 28rpx;
 	color: #333333;
+	border-bottom: 1rpx solid #f0f0f0;
+	transition: background-color 0.2s ease;
+	height: 80rpx;
+	display: flex;
+	align-items: center;
+}
+
+.dropdown-item:last-child {
+	border-bottom: none;
+}
+
+.dropdown-item:active {
+	background-color: #f8f8f8;
 }
 
 /* 搜索胶囊 */
@@ -277,12 +327,12 @@ onMounted(() => {
 }
 
 .search-icon {
-	font-size: 24rpx;
+	font-size: 28rpx;
 	color: #999999;
 }
 
 .search-placeholder {
-	font-size: 24rpx;
+	font-size: 28rpx;
 	color: #999999;
 }
 
@@ -292,10 +342,9 @@ onMounted(() => {
 	align-items: center;
 	gap: 6rpx;
 	padding: 12rpx 16rpx;
-	background: #f8f8f8;
+	background: transparent;
 	border-radius: 20rpx;
-	border: 1rpx solid #e5e5e5;
-	transition: all 0.3s ease;
+	border: none;
 }
 
 .location-btn:active {
@@ -303,13 +352,14 @@ onMounted(() => {
 }
 
 .location-icon {
-	font-size: 20rpx;
+	font-size: 24rpx;
 	color: #07c160;
 }
 
 .location-text {
-	font-size: 22rpx;
-	color: #333333;
+	font-size: 26rpx;
+	color: #07c160;
+	font-weight: 600;
 	max-width: 120rpx;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -522,4 +572,5 @@ onMounted(() => {
 		padding: 15rpx 25rpx 25rpx;
 	}
 }
+
 </style>
