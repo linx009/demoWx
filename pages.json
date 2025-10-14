@@ -38,6 +38,7 @@
 		"backgroundColor": "#F8F8F8"
 	},
 	"tabBar": {
+		"custom": true,
 		"color": "#7A7E83",
 		"selectedColor": "#0052D9",
 		"backgroundColor": "#ffffff",
@@ -50,8 +51,8 @@
 				"text": "鱼讯"
 			},
 			{
-				"pagePath": "pages/contacts/index",
-				"text": "联系人"
+				"pagePath": "pages/pond/list",
+				"text": "鱼塘"
 			},
 			{
 				"pagePath": "pages/apps/index",

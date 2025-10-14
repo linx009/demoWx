@@ -2,7 +2,7 @@
 	<view id="app">
 		<!-- 页面内容 -->
 		<view class="page-content">
-			<router-view />
+			<!-- uni-app会自动处理页面路由 -->
 		</view>
 	</view>
 </template>
