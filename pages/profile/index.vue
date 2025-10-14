@@ -238,7 +238,7 @@ onMounted(() => {
 <style>
 .container {
   min-height: 100vh;
-  background-color: #f7f7f7;
+  background-color: #fbfbfb;
   padding: 20rpx;
 }
 

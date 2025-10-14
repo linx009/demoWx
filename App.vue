@@ -22,9 +22,11 @@ export default {
 </script>
 
 <style>
+	@import url('./static/css/tabbar.css');
+	
 	/* 全局样式重置 */
 	page {
-		background-color: #f7f7f7;
+		background-color: #fbfbfb;
 		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 		line-height: 1.6;
 		color: #333;
@@ -37,7 +39,7 @@ export default {
 	/* 全局容器样式 */
 	.container {
 		min-height: 100vh;
-		background-color: #f7f7f7;
+		background-color: #fbfbfb;
 		position: relative;
 	}
 	

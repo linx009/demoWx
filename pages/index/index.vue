@@ -313,7 +313,7 @@ onMounted(() => {
 	display: flex;
 	align-items: center;
 	gap: 12rpx;
-	background: #f8f8f8;
+	background: #fbfbfb;
 	border-radius: 25rpx;
 	padding: 16rpx 24rpx;
 	margin: 0 20rpx;
@@ -322,7 +322,7 @@ onMounted(() => {
 }
 
 .search-capsule:active {
-	background: #f0f0f0;
+	background: #f5f5f5;
 	transform: scale(0.98);
 }
 

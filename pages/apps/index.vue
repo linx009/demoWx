@@ -1,8 +1,8 @@
 <template>
 	<view class="container">
 		<view class="header">
-			<text class="title">TDesign 图标库</text>
-			<text class="subtitle">工具页面 - 展示可用的图标</text>
+			<text class="title">神奇钓箱</text>
+			<text class="subtitle">钓鱼工具和实用功能</text>
 		</view>
 		
 		<view class="icon-section">
@@ -113,7 +113,7 @@ export default {
 <style scoped>
 .container {
 	padding: 40rpx;
-	background-color: #f7f7f7;
+	background-color: #fbfbfb;
 	min-height: 100vh;
 }
 

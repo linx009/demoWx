@@ -1,0 +1,47 @@
+/* 标签栏文字垂直居中样式 */
+.uni-tabbar {
+  display: flex;
+  align-items: center;
+  height: 80rpx;
+  background-color: #fbfbfb;
+}
+
+.uni-tabbar__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex: 1;
+}
+
+.uni-tabbar__text {
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+/* 微信小程序标签栏样式 */
+.tabbar {
+  display: flex;
+  align-items: center;
+  height: 80rpx;
+  background-color: #fbfbfb;
+}
+
+.tabbar-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex: 1;
+}
+
+.tabbar-text {
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}

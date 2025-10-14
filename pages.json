@@ -15,7 +15,7 @@
 		{
 			"path": "pages/apps/index",
 			"style": {
-				"navigationBarTitleText": "工具"
+				"navigationBarTitleText": "神奇钓箱"
 			}
 		},
 		{
@@ -29,34 +29,37 @@
 			"style": {
 				"navigationBarTitleText": "身份认证"
 			}
+		},
+		{
+			"path": "pages/pond/list",
+			"style": {
+				"navigationBarTitleText": "鱼塘"
+			}
 		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "首页",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"navigationBarBackgroundColor": "#fbfbfb",
+		"backgroundColor": "#fbfbfb"
 	},
 	"tabBar": {
-		"custom": true,
-		"color": "#7A7E83",
-		"selectedColor": "#0052D9",
-		"backgroundColor": "#ffffff",
+		"color": "#000000",
+		"selectedColor": "#FF0000",
+		"backgroundColor": "#fbfbfb",
 		"borderStyle": "black",
-		"fontSize": "16px",
-		"height": "60px",
+		"height": "80rpx",
+		"fontSize": "30rpx",
+		"iconWidth": "0rpx",
+		"spacing": "0rpx",
 		"list": [
 			{
 				"pagePath": "pages/index/index",
 				"text": "鱼讯"
 			},
 			{
-				"pagePath": "pages/pond/list",
-				"text": "鱼塘"
-			},
-			{
 				"pagePath": "pages/apps/index",
-				"text": "工具"
+				"text": "神奇钓箱"
 			},
 			{
 				"pagePath": "pages/profile/index",
