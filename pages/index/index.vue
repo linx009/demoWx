@@ -12,8 +12,8 @@
 				
 				<!-- 中间悬浮胶囊搜索框 -->
 				<view class="search-capsule" @click="handleSearch">
-					<text class="search-icon">🔍</text>
-					<text class="search-placeholder">搜索鱼塘、地点...</text>
+					<view class="search-icon"></view>
+					<text class="search-placeholder">搜索</text>
 				</view>
 				
 				<!-- 右上角关注下拉菜单 -->
@@ -251,13 +251,13 @@ onMounted(() => {
 
 .follow-text {
 	font-size: 28rpx;
-	color: #07c160;
+	color: #333333;
 	font-weight: 600;
 }
 
 .dropdown-icon {
 	font-size: 16rpx;
-	color: #07c160;
+	color: #333333;
 	transition: transform 0.3s ease;
 }
 
@@ -312,12 +312,13 @@ onMounted(() => {
 	flex: 1;
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	gap: 12rpx;
 	background: #fbfbfb;
 	border-radius: 25rpx;
 	padding: 16rpx 24rpx;
 	margin: 0 20rpx;
-	border: 1rpx solid #e5e5e5;
+	border: 2rpx solid #e5e5e5;
 	transition: all 0.3s ease;
 }
 
@@ -327,8 +328,33 @@ onMounted(() => {
 }
 
 .search-icon {
-	font-size: 28rpx;
-	color: #999999;
+	width: 34rpx;
+	height: 34rpx;
+	position: relative;
+	flex-shrink: 0;
+}
+
+.search-icon::before {
+	content: '';
+	position: absolute;
+	top: 5rpx;
+	left: -1rpx;
+	width: 18rpx;
+	height: 18rpx;
+	border: 2rpx solid #999999;
+	border-radius: 50%;
+}
+
+.search-icon::after {
+	content: '';
+	position: absolute;
+	bottom: 10rpx;
+	right: 7rpx;
+	width: 12rpx;
+	height: 2rpx;
+	background: #999999;
+	transform: rotate(45deg);
+	transform-origin: left center;
 }
 
 .search-placeholder {
