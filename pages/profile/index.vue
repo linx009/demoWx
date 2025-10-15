@@ -250,9 +250,16 @@ onMounted(() => {
 .login-card, .user-card {
   background: #ffffff;
   border-radius: 16rpx;
-  padding: 40rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
-  border: 1rpx solid #e5e5e5;
+  padding: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+  border: 1rpx solid #f0f0f0;
+  margin: 8rpx;
+  transition: all 0.3s ease;
+}
+
+.login-card:active, .user-card:active {
+  transform: scale(0.95);
+  box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.12);
 }
 
 .login-content {
@@ -382,11 +389,17 @@ onMounted(() => {
 
 .menu-group {
   background: #ffffff;
-  border-radius: 12rpx;
-  margin-bottom: 20rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
-  border: 1rpx solid #e5e5e5;
+  border-radius: 16rpx;
+  margin: 8rpx 0 20rpx 0;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+  border: 1rpx solid #f0f0f0;
   overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.menu-group:active {
+  transform: scale(0.98);
+  box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.12);
 }
 
 .menu-item {

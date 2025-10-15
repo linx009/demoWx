@@ -157,17 +157,18 @@ export default {
 
 .icon-item {
 	background: #ffffff;
-	border-radius: 12rpx;
-	padding: 30rpx 20rpx;
+	border-radius: 16rpx;
+	padding: 24rpx 16rpx;
 	text-align: center;
-	box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
-	border: 1rpx solid #e5e5e5;
+	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+	border: 1rpx solid #f0f0f0;
 	transition: all 0.3s ease;
+	margin: 8rpx;
 }
 
 .icon-item:active {
-	transform: translateY(1rpx);
-	box-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.1);
+	transform: scale(0.95);
+	box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.12);
 }
 
 .icon-name {

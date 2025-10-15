@@ -1,11 +1,11 @@
 <template>
 	<view class="container">
-		<view class="card p-3">
-			<view class="text-center">
-				<text class="text-primary" style="font-size: 48rpx; font-weight: bold;">联系人</text>
+		<view class="card">
+			<view class="card-header">
+				<text class="card-title">联系人</text>
 			</view>
-			<view class="mt-3">
-				<text class="text-secondary">这里是联系人页面</text>
+			<view class="card-body">
+				<text class="card-content">这里是联系人页面，管理您的钓友和鱼塘主联系方式。</text>
 			</view>
 		</view>
 	</view>
@@ -31,33 +31,11 @@ export default {
 .container {
   min-height: 100vh;
   background-color: #f7f7f7;
-  padding: 20rpx;
+  padding: 10rpx;
 }
 
-.card {
-  background: #ffffff;
-  border-radius: 12rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
-  border: 1rpx solid #e5e5e5;
-}
-
+/* 页面特定样式 */
 .text-center {
   text-align: center;
-}
-
-.text-primary {
-  color: #07c160;
-}
-
-.text-secondary {
-  color: #666666;
-}
-
-.mt-3 {
-  margin-top: 48rpx;
-}
-
-.p-3 {
-  padding: 48rpx;
 }
 </style>
