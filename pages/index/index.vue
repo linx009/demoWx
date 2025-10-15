@@ -247,7 +247,7 @@ onUnmounted(() => {
 /* 导航栏 */
 .navbar {
 	background: #fbfbfb;
-	padding: 20rpx 30rpx;
+	padding: 5rpx 30rpx 16rpx 30rpx;
 	box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
 	position: sticky;
 	top: 0;
@@ -256,7 +256,7 @@ onUnmounted(() => {
 
 .navbar-row {
 	display: flex;
-	align-items: center;
+	align-items: flex-end;
 	justify-content: space-between;
 	gap: 20rpx;
 }
@@ -345,8 +345,8 @@ onUnmounted(() => {
 	gap: 12rpx;
 	background: #fbfbfb;
 	border-radius: 25rpx;
-	padding: 16rpx 24rpx;
-	margin: 0 20rpx;
+	padding: 6rpx 24rpx;
+	margin: 0 45rpx;
 	border: 2rpx solid #e5e5e5;
 	transition: all 0.3s ease;
 }
