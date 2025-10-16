@@ -50,7 +50,7 @@
 						<view class="card-header-new">
 							<view class="pond-info-new">
 								<text class="pond-name-new">{{ pond.pondName }}</text>
-								<text class="location-new">{{ pond.location }} ({{ pond.distance }})</text>
+								<text class="location-new">地址：{{ pond.location }} ({{ pond.distance }})</text>
 							</view>
 							<view class="info-type-new">
 								<view class="type-container-new">
@@ -192,36 +192,54 @@ const pondList = ref([
 	},
 	{
 		id: 2,
-		name: '海淀水库',
+		pondName: '海滨水库',
+		infoType: '夜钓',
+		infoStatus: '报名中',
 		location: '北京市海淀区上庄水库',
 		distance: '5.8km',
-		price: 120,
-		status: 'active',
-		statusText: '推荐',
-		rules: '可夜钓，需提前预约，提供钓具租赁',
-		tags: ['大鱼', '夜钓', '预约']
+		time: '今晚7点开始',
+		spots: 30,
+		fishSpecies: '草鱼',
+		fishQuantity: '3000斤',
+		fee: '80元/6小时',
+		returnPrice: '5元/斤',
+		champion: '钓友小王 45斤',
+		message: '夜钓环境很好，鱼情稳定！',
+		pondImage: 'https://picsum.photos/300/200?random=seaside'
 	},
 	{
 		id: 3,
-		name: '丰台鱼塘',
+		pondName: '丰台鱼塘',
+		infoType: '正钓',
+		infoStatus: '爆满',
 		location: '北京市丰台区南苑',
 		distance: '8.2km',
-		price: 60,
-		status: 'busy',
-		statusText: '爆满',
-		rules: '限时6小时，禁止使用活饵',
-		tags: ['便宜', '限时', '新手友好']
+		time: '限时6小时',
+		spots: 25,
+		fishSpecies: '鲫鱼',
+		fishQuantity: '2000斤',
+		fee: '60元/6小时',
+		returnPrice: '3元/斤',
+		champion: '钓友老张 32斤',
+		message: '新手友好，环境干净！',
+		pondImage: 'https://picsum.photos/300/200?random=fengtai'
 	},
 	{
 		id: 4,
-		name: '通州野钓点',
+		pondName: '通下野钓点',
+		infoType: '野钓',
+		infoStatus: null,
 		location: '北京市通州区运河公园',
 		distance: '12.5km',
-		price: 0,
-		status: 'active',
-		statusText: '免费',
-		rules: '野钓点，自备钓具，注意安全',
-		tags: ['免费', '野钓', '自然']
+		time: '全天开放',
+		spots: 20,
+		fishSpecies: '鲤鱼',
+		fishQuantity: '1500斤',
+		fee: '免费',
+		returnPrice: '自留',
+		champion: '钓友老刘 28斤',
+		message: '环境清幽，适合休闲垂钓',
+		pondImage: 'https://picsum.photos/300/200?random=wild'
 	}
 ])
 
@@ -514,6 +532,7 @@ onUnmounted(() => {
 /* 内容区域 */
 .content-area {
 	padding: 15rpx 15rpx;
+	background-color: #f0f0f0;
 }
 
 .pond-list {
@@ -552,7 +571,7 @@ onUnmounted(() => {
 .pond-name-new {
 	font-size: 36rpx;
 	font-weight: 600;
-	color: #555;
+	color: #e74c3c;
 	display: block;
 	margin-bottom: 12rpx;
 }
@@ -561,6 +580,7 @@ onUnmounted(() => {
 	font-size: 26rpx;
 	color: #666;
 	font-weight: 500;
+	margin-bottom: 12rpx;
 }
 
 .info-type-new {
@@ -609,7 +629,7 @@ onUnmounted(() => {
 .type-title-new {
 	font-size: 36rpx;
 	font-weight: 700;
-	color: #555;
+	color: #e74c3c;
 }
 
 /* 卡片主体 */
@@ -753,6 +773,7 @@ onUnmounted(() => {
 	
 	.content-area {
 		padding: 10rpx 10rpx;
+		background-color: #f0f0f0;
 	}
 	
 	.pond-list {
@@ -790,6 +811,7 @@ onUnmounted(() => {
 	
 	.pond-name-new {
 		font-size: 32rpx;
+		color: #e74c3c;
 	}
 	
 	.location-new {
@@ -798,6 +820,7 @@ onUnmounted(() => {
 	
 	.type-title-new {
 		font-size: 32rpx;
+		color: #e74c3c;
 	}
 	
 	.badge-text-new {
