@@ -561,7 +561,7 @@ onUnmounted(() => {
 	display: flex;
 	justify-content: space-between;
 	align-items: flex-start;
-	padding: 0rpx 24rpx 0rpx;
+	padding: 0rpx 24rpx 12rpx;
 }
 
 .pond-info-new {
@@ -580,7 +580,7 @@ onUnmounted(() => {
 	font-size: 26rpx;
 	color: #666;
 	font-weight: 500;
-	margin-bottom: 12rpx;
+	margin-bottom: 0rpx;
 }
 
 .info-type-new {
