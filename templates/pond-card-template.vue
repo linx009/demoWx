@@ -5,7 +5,7 @@
 		<view class="card-header-new">
 			<view class="pond-info-new">
 				<text class="pond-name-new">{{ pond.pondName }}</text>
-				<text class="location-new">地址：{{ pond.location }} ({{ pond.distance }})</text>
+				<text class="location-new">地址：{{ formatLocation(pond.location) }} ({{ pond.distance }})</text>
 			</view>
 			<view class="info-type-new">
 				<view class="type-container-new">
@@ -37,7 +37,7 @@
 				<!-- 第三行：钓位数和时间（单行显示） -->
 				<view class="info-row-new">
 					<text class="info-item-new">钓位数：{{ pond.spots }}个</text>
-					<text class="info-item-new time-compact">时间：{{ pond.time }}</text>
+					<text class="info-item-new time-compact">时间：{{ formatTime(pond.time) }}</text>
 				</view>
 			</view>
 			
@@ -89,6 +89,37 @@ export default {
 				message: '今天鱼情不错，大家快来！'
 			})
 		}
+	},
+	methods: {
+		// 格式化地址显示：从区县开始，最长不超过下行"斤"字
+		formatLocation(location) {
+			if (!location) return '';
+			
+			// 从区县开始显示
+			const districtMatch = location.match(/([^市]+区|[^市]+县|[^市]+市)/);
+			if (districtMatch) {
+				const startIndex = location.indexOf(districtMatch[1]);
+				return location.substring(startIndex);
+			}
+			
+			return location;
+		},
+		
+		// 格式化时间显示：日期从月开始，如10月20日8：00
+		formatTime(time) {
+			if (!time) return '';
+			
+			// 如果包含日期，从月开始显示
+			const dateMatch = time.match(/(\d{1,2})月(\d{1,2})日/);
+			if (dateMatch) {
+				const month = dateMatch[1];
+				const day = dateMatch[2];
+				const timePart = time.replace(/\d{1,2}月\d{1,2}日/, '').trim();
+				return `${month}月${day}日${timePart}`;
+			}
+			
+			return time;
+		}
 	}
 }
 </script>
@@ -132,10 +163,15 @@ export default {
 }
 
 .location-new {
-	font-size: 26rpx;
+	font-size: 30rpx;
 	color: #666;
 	font-weight: 500;
 	margin-bottom: 0rpx;
+	/* 内容截断：行内空间不够时，后面的内容不被展示 */
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	max-width: calc(100% - 200rpx); /* 为右侧信息类型留出空间 */
 }
 
 .info-type-new {
@@ -207,10 +243,14 @@ export default {
 }
 
 .info-item-new {
-	font-size: 26rpx;
+	font-size: 30rpx;
 	color: #666;
 	font-weight: 500;
 	flex: 1;
+	/* 内容截断：行内空间不够时，后面的内容不被展示 */
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 /* 时间紧凑显示 */
@@ -286,7 +326,7 @@ export default {
 	font-style: italic;
 }
 
-/* 响应式设计 */
+/* 响应式设计 - 遵循内容截断策略，不改变字体大小 */
 @media (max-width: 750rpx) {
 	/* 新模板响应式设计 */
 	.card-header-new {
@@ -297,33 +337,7 @@ export default {
 		padding: 0 20rpx 0rpx;
 	}
 	
-	.pond-name-new {
-		font-size: 32rpx;
-		color: #e74c3c;
-	}
-	
-	.location-new {
-		font-size: 22rpx;
-	}
-	
-	.type-title-new {
-		font-size: 32rpx;
-		color: #e74c3c;
-	}
-	
-	.badge-text-new {
-		font-size: 18rpx;
-	}
-	
-	.info-item-new {
-		font-size: 24rpx;
-	}
-	
-	.champion-text-new,
-	.message-text-new {
-		font-size: 22rpx;
-	}
-	
+	/* 保持字体大小不变，通过内容截断适应空间 */
 	.pond-image-new {
 		width: 120rpx;
 		height: auto;

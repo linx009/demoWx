@@ -577,7 +577,7 @@ onUnmounted(() => {
 }
 
 .location-new {
-	font-size: 26rpx;
+	font-size: 30rpx;
 	color: #666;
 	font-weight: 500;
 	margin-bottom: 0rpx;
@@ -652,7 +652,7 @@ onUnmounted(() => {
 }
 
 .info-item-new {
-	font-size: 26rpx;
+	font-size: 30rpx;
 	color: #666;
 	font-weight: 500;
 	flex: 1;
@@ -814,9 +814,7 @@ onUnmounted(() => {
 		color: #e74c3c;
 	}
 	
-	.location-new {
-		font-size: 22rpx;
-	}
+	/* 保持字体大小不变，遵循内容截断策略 */
 	
 	.type-title-new {
 		font-size: 32rpx;
@@ -827,9 +825,7 @@ onUnmounted(() => {
 		font-size: 18rpx;
 	}
 	
-	.info-item-new {
-		font-size: 24rpx;
-	}
+	/* 保持字体大小不变，遵循内容截断策略 */
 	
 	.champion-text-new,
 	.message-text-new {
