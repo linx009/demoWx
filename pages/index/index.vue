@@ -307,9 +307,9 @@ const handleLocation = () => {
 // 跳转到鱼塘详情
 const goToPondDetail = (pond) => {
 	if (pond.pondName) {
-		uni.showToast({
-			title: `查看${pond.pondName}详情`,
-			icon: 'none'
+		// 跳转到鱼塘详情页，传递鱼塘ID
+		uni.navigateTo({
+			url: `/pages/pond/detail?pondId=${pond.id}&pondName=${encodeURIComponent(pond.pondName)}`
 		})
 	} else {
 		uni.showToast({

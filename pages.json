@@ -35,6 +35,13 @@
 			"style": {
 				"navigationBarTitleText": "鱼塘"
 			}
+		},
+		{
+			"path": "pages/pond/detail",
+			"style": {
+				"navigationBarTitleText": "鱼塘详情",
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"globalStyle": {
