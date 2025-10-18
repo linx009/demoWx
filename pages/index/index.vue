@@ -307,7 +307,7 @@ const handleLocation = () => {
 // 跳转到鱼塘详情
 const goToPondDetail = (pond) => {
 	if (pond.pondName) {
-		// 跳转到鱼塘详情页，传递鱼塘ID
+		// 跳转到钓场主页，传递鱼塘ID
 		uni.navigateTo({
 			url: `/pages/pond/detail?pondId=${pond.id}&pondName=${encodeURIComponent(pond.pondName)}`
 		})

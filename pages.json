@@ -39,7 +39,7 @@
 		{
 			"path": "pages/pond/detail",
 			"style": {
-				"navigationBarTitleText": "鱼塘详情",
+				"navigationBarTitleText": "钓场主页",
 				"navigationStyle": "custom"
 			}
 		}

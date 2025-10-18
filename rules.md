@@ -33,7 +33,7 @@ demoWx/
 │   ├── index/            # 首页
 │   ├── pond/             # 钓场相关
 │   │   ├── list.vue      # 极速钓场列表
-│   │   ├── detail.vue    # 钓场详情
+│   │   ├── detail.vue    # 钓场主页
 │   │   └── publish.vue   # 塘主发布
 │   ├── follow/           # 关注管理
 │   │   ├── management.vue # 关注管理
