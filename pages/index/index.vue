@@ -37,120 +37,12 @@
 		<!-- 信息显示区域 -->
 		<view class="content-area">
 			<view class="pond-list">
-				<view 
-					class="card" 
+				<FishingFieldCard 
 					v-for="(pond, index) in pondList" 
 					:key="pond.id"
+					:pond="pond"
 					@click="goToPondDetail(pond)"
-					:class="{ 'new-template': pond.pondName }"
-				>
-					<!-- 新模板设计的卡片 -->
-					<template v-if="pond.pondName">
-						<!-- 卡片头部：鱼塘名称 + 信息类型 -->
-						<view class="card-header-new">
-							<view class="pond-info-new">
-								<text class="pond-name-new">{{ pond.pondName }}</text>
-								<text class="location-new">地址：{{ pond.location }} ({{ pond.distance }})</text>
-							</view>
-							<view class="info-type-new">
-								<view class="type-container-new">
-									<!-- 正钓放在报名中前面 -->
-									<text class="type-title-new">{{ pond.infoType }}</text>
-									<view class="status-badge-new" v-if="pond.infoStatus">
-										<text class="badge-text-new">{{ pond.infoStatus }}</text>
-									</view>
-								</view>
-							</view>
-						</view>
-						
-						<!-- 卡片主体：信息展示 + 左下角图片 -->
-						<view class="card-body-new">
-							<!-- 信息区域 -->
-							<view class="info-area-new">
-								<!-- 第一行：鱼种和数量 -->
-								<view class="info-row-new">
-									<text class="info-item-new">鱼种：{{ pond.fishSpecies }}</text>
-									<text class="info-item-new">数量：{{ pond.fishQuantity }}</text>
-								</view>
-								
-								<!-- 第二行：钓费和回鱼 -->
-								<view class="info-row-new">
-									<text class="info-item-new">钓费：{{ pond.fee }}</text>
-									<text class="info-item-new">回鱼：{{ pond.returnPrice }}</text>
-								</view>
-								
-								<!-- 第三行：钓位数和时间（单行显示） -->
-								<view class="info-row-new">
-									<text class="info-item-new">钓位数：{{ pond.spots }}个</text>
-									<text class="info-item-new time-compact">时间：{{ pond.time }}</text>
-								</view>
-							</view>
-							
-							<!-- 左下角图片 + 坑冠和留言 -->
-							<view class="bottom-section-new">
-								<!-- 钓场图片 - 左下角，150rpx -->
-								<view class="pond-image-new">
-									<image :src="pond.pondImage" class="image-new" mode="aspectFill"></image>
-								</view>
-								
-								<!-- 坑冠和留言区域 - 并排显示 -->
-								<view class="champion-message-new">
-									<!-- 坑冠信息 - 第一行 -->
-									<view class="champion-new" v-if="pond.champion">
-										<text class="champion-text-new">坑冠：{{ pond.champion }}</text>
-									</view>
-									
-									<!-- 我有话讲 - 第二行 -->
-									<view class="message-new" v-if="pond.message">
-										<text class="message-text-new">老板说："{{ pond.message }}"</text>
-									</view>
-								</view>
-							</view>
-						</view>
-					</template>
-
-					<!-- 原有设计的卡片 -->
-					<template v-else>
-						<!-- 卡片头部 -->
-						<view class="card-header">
-							<view class="pond-info">
-								<text class="card-title">{{ pond.name }}</text>
-								<view class="pond-location">
-									<text class="location-icon">📍</text>
-									<text class="card-subtitle">{{ pond.location }}</text>
-								</view>
-							</view>
-							<view class="card-status" :class="pond.status">
-								<text class="status-text">{{ pond.statusText }}</text>
-							</view>
-						</view>
-						
-						<!-- 卡片主体 -->
-						<view class="card-body">
-							<view class="pond-rules">
-								<text class="card-content">{{ pond.rules }}</text>
-							</view>
-							
-							<view class="card-meta">
-								<view class="meta-item">
-									<text class="meta-label">距离</text>
-									<text class="meta-value">{{ pond.distance }}</text>
-								</view>
-								<view class="meta-item">
-									<text class="meta-label">价格</text>
-									<text class="meta-value">¥{{ pond.price }}/天</text>
-								</view>
-							</view>
-						</view>
-						
-						<!-- 卡片底部 -->
-						<view class="card-footer">
-							<view class="card-tags">
-								<text class="card-tag" v-for="tag in pond.tags" :key="tag">{{ tag }}</text>
-							</view>
-						</view>
-					</template>
-				</view>
+				/>
 			</view>
 		</view>
 
@@ -161,6 +53,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import FishingFieldCard from '@/components/FishingFieldCard.vue'
 
 // 用户状态
 const userInfo = ref(null)
@@ -176,70 +69,42 @@ const pondList = ref([
 	{
 		id: 1,
 		pondName: '朝阳湖钓场',
-		infoType: '正钓',
-		infoStatus: '报名中',
 		location: '北京市朝阳区朝阳公园',
 		distance: '2.5km',
-		time: '星期六上午8点',
-		spots: 50,
 		fishSpecies: '鲤鱼',
-		fishQuantity: '5000斤',
 		fee: '50元/4小时',
-		returnPrice: '4元/斤',
 		champion: '钓友老李 68斤',
-		message: '今天鱼情不错，大家快来！',
-		pondImage: 'https://picsum.photos/300/200?random=pond'
+		message: '今天鱼情不错，大家快来！'
 	},
 	{
 		id: 2,
 		pondName: '海滨水库',
-		infoType: '夜钓',
-		infoStatus: '报名中',
 		location: '北京市海淀区上庄水库',
 		distance: '5.8km',
-		time: '今晚7点开始',
-		spots: 30,
 		fishSpecies: '草鱼',
-		fishQuantity: '3000斤',
 		fee: '80元/6小时',
-		returnPrice: '5元/斤',
 		champion: '钓友小王 45斤',
-		message: '夜钓环境很好，鱼情稳定！',
-		pondImage: 'https://picsum.photos/300/200?random=seaside'
+		message: '夜钓环境很好，鱼情稳定！'
 	},
 	{
 		id: 3,
 		pondName: '丰台鱼塘',
-		infoType: '正钓',
-		infoStatus: '爆满',
 		location: '北京市丰台区南苑',
 		distance: '8.2km',
-		time: '限时6小时',
-		spots: 25,
 		fishSpecies: '鲫鱼',
-		fishQuantity: '2000斤',
 		fee: '60元/6小时',
-		returnPrice: '3元/斤',
 		champion: '钓友老张 32斤',
-		message: '新手友好，环境干净！',
-		pondImage: 'https://picsum.photos/300/200?random=fengtai'
+		message: '新手友好，环境干净！'
 	},
 	{
 		id: 4,
 		pondName: '通下野钓点',
-		infoType: '野钓',
-		infoStatus: null,
 		location: '北京市通州区运河公园',
 		distance: '12.5km',
-		time: '全天开放',
-		spots: 20,
 		fishSpecies: '鲤鱼',
-		fishQuantity: '1500斤',
 		fee: '免费',
-		returnPrice: '自留',
 		champion: '钓友老刘 28斤',
-		message: '环境清幽，适合休闲垂钓',
-		pondImage: 'https://picsum.photos/300/200?random=wild'
+		message: '环境清幽，适合休闲垂钓'
 	}
 ])
 
@@ -306,14 +171,17 @@ const handleLocation = () => {
 
 // 跳转到鱼塘详情
 const goToPondDetail = (pond) => {
+	console.log('goToPondDetail被调用:', pond)
 	if (pond.pondName) {
 		// 跳转到钓场主页，传递鱼塘ID
+		console.log('准备跳转到钓场详情页:', pond.id, pond.pondName)
 		uni.navigateTo({
 			url: `/pages/pond/detail?pondId=${pond.id}&pondName=${encodeURIComponent(pond.pondName)}`
 		})
 	} else {
+		console.log('钓场数据格式不正确:', pond)
 		uni.showToast({
-			title: `查看${pond.name}详情`,
+			title: '钓场信息不完整',
 			icon: 'none'
 		})
 	}
@@ -348,7 +216,7 @@ onUnmounted(() => {
 .container {
 	padding: 0;
 	min-height: 100vh;
-	background-color: #fbfbfb;
+	background-color: $uni-bg-color-tabbar;
 	position: relative;
 }
 
@@ -388,13 +256,13 @@ onUnmounted(() => {
 
 .follow-text {
 	font-size: 28rpx;
-	color: #333333;
+	color: $uni-text-color-primary;
 	font-weight: 600;
 }
 
 .dropdown-icon {
 	font-size: 16rpx;
-	color: #333333;
+	color: $uni-text-color-primary;
 	transition: transform 0.3s ease;
 }
 
@@ -428,7 +296,7 @@ onUnmounted(() => {
 .dropdown-item {
 	padding: 20rpx 32rpx;
 	font-size: 28rpx;
-	color: #333333;
+	color: $uni-text-color-primary;
 	border-bottom: 1rpx solid #f0f0f0;
 	transition: background-color 0.2s ease;
 	height: 80rpx;
@@ -441,7 +309,7 @@ onUnmounted(() => {
 }
 
 .dropdown-item:active {
-	background-color: #f8f8f8;
+	background-color: $uni-bg-color-section;
 }
 
 /* 搜索胶囊 */
@@ -496,7 +364,7 @@ onUnmounted(() => {
 
 .search-placeholder {
 	font-size: 28rpx;
-	color: #999999;
+	color: $uni-text-color-tertiary;
 }
 
 /* 定位按钮 */
@@ -516,12 +384,12 @@ onUnmounted(() => {
 
 .location-icon {
 	font-size: 24rpx;
-	color: #666666;
+	color: $uni-text-color-secondary;
 }
 
 .location-text {
 	font-size: 26rpx;
-	color: #333333;
+	color: $uni-text-color-primary;
 	font-weight: 600;
 	max-width: 120rpx;
 	overflow: hidden;
@@ -541,22 +409,13 @@ onUnmounted(() => {
 	gap: 5rpx;
 }
 
-/* 新模板卡片样式 - 微调版本 */
-.card.new-template {
-	background: #fafbfc;
-	border-radius: 16rpx;
-	box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.08);
-	border: 1rpx solid #e9ecef;
-	overflow: hidden;
-	transition: all 0.3s ease;
+/* 钓场列表样式 */
+.pond-list {
+	display: flex;
+	flex-direction: column;
+	gap: 20rpx;
 }
 
-.card.new-template:active {
-	transform: translateY(-2rpx);
-	box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.12);
-}
-
-/* 卡片头部 */
 .card-header-new {
 	display: flex;
 	justify-content: space-between;

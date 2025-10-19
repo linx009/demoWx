@@ -77,31 +77,51 @@
 		<!-- 鱼塘经营 -->
 		<view class="business-section">
 			<view class="business-content">
+				<!-- 鱼塘卡片：展示单个鱼塘的详细信息 -->
 				<view class="pond-card" v-for="(pond, index) in pondDetail.ponds" :key="index" @click="goToPond(pond)">
 					<view class="card-header">
 						<text class="pond-name">{{ pond.name }}</text>
-						<text class="pond-price">{{ pond.price }}</text>
+						<text class="pond-price">{{ formatPrice(pond.price) }}</text>
 					</view>
 					<view class="card-content">
+						<!-- 第一行：回鱼与底鱼 -->
 						<view class="card-row">
-							<text class="card-label">回鱼：</text>
-							<text class="card-value">{{ pond.returnPrice }}</text>
+							<view class="card-item">
+								<text class="card-label">回鱼：</text>
+								<text class="card-value">{{ pond.returnPrice }}</text>
+							</view>
+							<view class="card-item">
+								<text class="card-label">底鱼：</text>
+								<text class="card-value">{{ pond.baseFish }}</text>
+							</view>
 						</view>
+						<!-- 第二行：钓位数与选位方式 -->
 						<view class="card-row">
-							<text class="card-label">底鱼：</text>
-							<text class="card-value">{{ pond.baseFish }}</text>
+							<view class="card-item">
+								<text class="card-label">钓位数：</text>
+								<text class="card-value">{{ pond.spots }}个</text>
+							</view>
+							<view class="card-item">
+								<text class="card-label">选位方式：</text>
+								<text class="card-value">{{ pond.selectionMethod || '先到先得' }}</text>
+							</view>
 						</view>
+						<!-- 第三行：作钓时长与上日坑冠 -->
 						<view class="card-row">
-							<text class="card-label">作钓时长：</text>
-							<text class="card-value">{{ pond.duration }}</text>
+							<view class="card-item">
+								<text class="card-label">作钓时长：</text>
+								<text class="card-value">{{ pond.duration }}</text>
+							</view>
+							<view class="card-item">
+								<text class="card-label">上日坑冠：</text>
+								<text class="card-value">{{ pond.champion }}</text>
+							</view>
 						</view>
-						<view class="card-row">
-							<text class="card-label">上日坑冠：</text>
-							<text class="card-value">{{ pond.champion }}</text>
-						</view>
-						<view class="card-row">
-							<text class="card-label">钓位数：</text>
-							<text class="card-value">{{ pond.spots }}个</text>
+					</view>
+					<!-- 我要购票按钮 - 单独一行，位于卡片底部 -->
+					<view class="fishing-button-container">
+						<view class="fishing-button">
+							<text class="fishing-button-text">我要购票</text>
 						</view>
 					</view>
 				</view>
@@ -121,6 +141,12 @@
 						<text class="activity-date">{{ activity.date }}</text>
 					</view>
 					<text class="activity-content-text">{{ activity.content }}</text>
+					<!-- 活动状态栏 -->
+					<view class="activity-status-container">
+						<view class="activity-status" :class="getStatusClass(activity.status)">
+							<text class="activity-status-text">{{ activity.status }}</text>
+						</view>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -158,7 +184,8 @@ const pondDetail = ref({
 			baseFish: '5000斤',
 			duration: '4小时',
 			champion: '钓友老李 68斤',
-			spots: 25
+			spots: 25,
+			selectionMethod: '先到先得'
 		},
 		{
 			id: 2,
@@ -168,7 +195,8 @@ const pondDetail = ref({
 			baseFish: '8000斤',
 			duration: '6小时',
 			champion: '钓友小王 85斤',
-			spots: 30
+			spots: 30,
+			selectionMethod: '抽签选位'
 		},
 		{
 			id: 3,
@@ -178,7 +206,8 @@ const pondDetail = ref({
 			baseFish: '12000斤',
 			duration: '8小时',
 			champion: '钓友老张 120斤',
-			spots: 20
+			spots: 20,
+			selectionMethod: '预约选位'
 		}
 	],
 	activities: [
@@ -186,19 +215,22 @@ const pondDetail = ref({
 			id: 1,
 			title: '周末钓鱼大赛',
 			date: '2024-01-20',
-			content: '本周末举办钓鱼大赛，冠军可获得现金奖励1000元，欢迎各位钓友踊跃参加！'
+			content: '本周末举办钓鱼大赛，冠军可获得现金奖励1000元，欢迎各位钓友踊跃参加！',
+			status: '报名中'
 		},
 		{
 			id: 2,
 			title: '新鱼投放通知',
 			date: '2024-01-18',
-			content: '本周三将投放新鲜鲤鱼3000斤，鱼情将会更好，请大家关注！'
+			content: '本周三将投放新鲜鲤鱼3000斤，鱼情将会更好，请大家关注！',
+			status: '未开始'
 		},
 		{
 			id: 3,
 			title: '钓场维护通知',
 			date: '2024-01-15',
-			content: '本周一钓场进行设备维护，暂停营业一天，周二正常营业。'
+			content: '本周一钓场进行设备维护，暂停营业一天，周二正常营业。',
+			status: '报满'
 		}
 	]
 })
@@ -244,6 +276,14 @@ const goToActivityPage = () => {
 	// })
 }
 
+// 格式化价格显示：从"50元/4小时"简化为"50元"
+const formatPrice = (price) => {
+	if (!price) return ''
+	// 提取价格部分，去掉时间部分
+	const priceMatch = price.match(/(\d+)元/)
+	return priceMatch ? `${priceMatch[1]}元` : price
+}
+
 // 跳转到鱼塘页面
 const goToPond = (pond) => {
 	uni.showToast({
@@ -268,13 +308,30 @@ const goToActivity = (activity) => {
 	// })
 }
 
+// 获取活动状态样式类
+const getStatusClass = (status) => {
+	switch (status) {
+		case '未开始':
+			return 'status-not-started'
+		case '报名中':
+			return 'status-registering'
+		case '报满':
+			return 'status-full'
+		default:
+			return 'status-default'
+	}
+}
+
+// 页面加载时接收参数
 onMounted(() => {
 	const pages = getCurrentPages()
 	const currentPage = pages[pages.length - 1]
 	const options = currentPage.options
 	
+	console.log('钓场详情页加载，接收参数:', options)
 	if (options.pondId) {
 		console.log('获取鱼塘详情，ID:', options.pondId)
+		console.log('钓场名称:', options.pondName)
 	}
 })
 </script>
@@ -324,7 +381,7 @@ onMounted(() => {
 }
 
 .nav-title {
-	font-size: 36rpx;
+	font-size: 40rpx; /* 调大导航标题字体 */
 	font-weight: 600;
 	color: #e74c3c;
 }
@@ -392,7 +449,7 @@ onMounted(() => {
 }
 
 .announcement-title {
-	background: #ffd700;
+	background: #e74c3c; /* 改为红色背景 */
 	width: 100rpx;
 	height: 100%;
 	display: flex;
@@ -409,12 +466,12 @@ onMounted(() => {
 	top: 0;
 	bottom: 0;
 	width: 1rpx;
-	background: #ffd700;
+	background: #e74c3c; /* 分隔线颜色与背景色保持一致 */
 }
 
 .announcement-title-text {
 	color: #ffffff;
-	font-size: 36rpx;
+	font-size: 40rpx; /* 调大公告标题字体 */
 	font-weight: 600;
 	writing-mode: vertical-rl;
 	text-orientation: mixed;
@@ -430,7 +487,7 @@ onMounted(() => {
 
 .announcement-text {
 	color: #ffffff;
-	font-size: 32rpx;
+	font-size: 34rpx; /* 调大公告内容字体 */
 	line-height: 1.6;
 	display: block;
 }
@@ -446,7 +503,7 @@ onMounted(() => {
 
 /* 区域标题样式 */
 .section-title {
-	font-size: 32rpx;
+	font-size: 36rpx; /* 调大区域标题字体 */
 	font-weight: 600;
 	color: #333;
 	padding: 30rpx 30rpx 20rpx 30rpx;
@@ -484,13 +541,13 @@ onMounted(() => {
 }
 
 .info-label {
-	font-size: 28rpx;
+	font-size: 30rpx; /* 调大信息标签字体 */
 	color: #666;
 	width: 140rpx;
 }
 
 .info-value {
-	font-size: 28rpx;
+	font-size: 30rpx; /* 调大信息值字体 */
 	color: #333;
 	font-weight: 500;
 	flex: 1;
@@ -512,7 +569,7 @@ onMounted(() => {
 	font-size: 24rpx;
 }
 
-/* 鱼塘经营样式 */
+/* 鱼塘经营样式 - 包含鱼塘卡片 */
 .business-section {
 	background: #ffffff;
 }
@@ -529,8 +586,9 @@ onMounted(() => {
 	border: 1rpx solid #e5e5e5;
 	border-radius: 12rpx;
 	padding: 25rpx;
-	box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+	box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.15); /* 投影颜色加深 */
 	transition: all 0.3s ease;
+	position: relative;
 }
 
 .pond-card:active {
@@ -544,17 +602,18 @@ onMounted(() => {
 	align-items: center;
 	margin-bottom: 20rpx;
 	padding-bottom: 15rpx;
-	border-bottom: 1rpx solid #f0f0f0;
+	border-bottom: 1rpx solid #999999; /* 分隔线颜色调整 */
+	padding-right: 20rpx; /* 票价不要太靠边 */
 }
 
 .pond-name {
-	font-size: 32rpx;
+	font-size: 36rpx; /* 增大字体 */
 	font-weight: 600;
 	color: #333;
 }
 
 .pond-price {
-	font-size: 28rpx;
+	font-size: 32rpx; /* 增大字体 */
 	color: #e74c3c;
 	font-weight: 600;
 }
@@ -562,25 +621,81 @@ onMounted(() => {
 .card-content {
 	display: flex;
 	flex-direction: column;
-	gap: 12rpx;
+	gap: 25rpx; /* 进一步增大行间距 */
+	margin-bottom: 20rpx;
 }
 
 .card-row {
 	display: flex;
+	justify-content: space-between;
+	gap: 20rpx;
+}
+
+.card-item {
+	display: flex;
 	align-items: center;
+	flex: 1;
 }
 
 .card-label {
-	font-size: 26rpx;
+	font-size: 28rpx; /* 调大卡片标签字体 */
 	color: #666;
-	width: 140rpx;
+	margin-right: 8rpx;
 }
 
 .card-value {
-	font-size: 26rpx;
+	font-size: 28rpx; /* 调大卡片值字体 */
 	color: #333;
 	font-weight: 500;
-	flex: 1;
+}
+
+/* 我要钓鱼按钮容器样式 */
+.fishing-button-container {
+	display: flex;
+	justify-content: center;
+	margin-top: 20rpx;
+	padding-top: 15rpx;
+	/* 去掉分隔线 */
+}
+
+/* 我要钓鱼按钮样式 - 悬浮型、线框型 */
+.fishing-button {
+	background: transparent;
+	border: 2rpx solid #07c160;
+	border-radius: 20rpx;
+	padding: 10rpx 80rpx; /* 高度减小，宽度加长一倍 */
+	box-shadow: 0 4rpx 12rpx rgba(7, 193, 96, 0.2);
+	transition: all 0.3s ease;
+	position: relative;
+	overflow: hidden;
+}
+
+.fishing-button::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg, transparent, rgba(7, 193, 96, 0.1), transparent);
+	transition: left 0.5s ease;
+}
+
+.fishing-button:active {
+	transform: translateY(2rpx);
+	box-shadow: 0 2rpx 8rpx rgba(7, 193, 96, 0.3);
+}
+
+.fishing-button:active::before {
+	left: 100%;
+}
+
+.fishing-button-text {
+	font-size: 28rpx;
+	color: #07c160;
+	font-weight: 600;
+	position: relative;
+	z-index: 1;
 }
 
 /* 活动公告样式 */
@@ -631,6 +746,64 @@ onMounted(() => {
 	font-size: 26rpx;
 	color: #666;
 	line-height: 1.5;
+}
+
+/* 活动状态栏样式 */
+.activity-status-container {
+	margin-top: 20rpx;
+	padding-top: 15rpx;
+	border-top: 1rpx solid #999999; /* 分隔线样式与鱼塘卡片相同 */
+	display: flex;
+	justify-content: center;
+}
+
+.activity-status {
+	padding: 8rpx 20rpx;
+	border-radius: 15rpx;
+	background: #f5f5f5;
+	border: 1rpx solid #e0e0e0;
+}
+
+.activity-status-text {
+	font-size: 24rpx;
+	font-weight: 600;
+}
+
+/* 不同状态的样式 */
+.status-not-started {
+	background: #f0f9ff;
+	border-color: #07c160;
+}
+
+.status-not-started .activity-status-text {
+	color: #07c160; /* 未开始的活动用绿色字体 */
+}
+
+.status-registering {
+	background: #fff7e6;
+	border-color: #ff9500;
+}
+
+.status-registering .activity-status-text {
+	color: #ff9500;
+}
+
+.status-full {
+	background: #fff2f0;
+	border-color: #ff4d4f;
+}
+
+.status-full .activity-status-text {
+	color: #ff4d4f;
+}
+
+.status-default {
+	background: #f5f5f5;
+	border-color: #d9d9d9;
+}
+
+.status-default .activity-status-text {
+	color: #666;
 }
 
 </style>
