@@ -34,7 +34,11 @@ export default {
 				fishSpecies: '鲤鱼',
 				fee: '50元/4小时',
 				champion: '钓友老李 68斤',
-				message: '今天鱼情不错，大家快来！'
+				message: '今天鱼情不错，大家快来！',
+				announcement: {
+					topic: '正钓',
+					status: '报名中'
+				}
 			},
 			
 			// 多个钓场数据示例
@@ -46,7 +50,11 @@ export default {
 					fishSpecies: '鲫鱼',
 					fee: '80元/6小时',
 					champion: '钓友小王 45斤',
-					message: '新放的鱼，口很好！'
+					message: '新放的鱼，口很好！',
+					announcement: {
+						topic: '新鱼场',
+						status: '火爆中'
+					}
 				},
 				{
 					pondName: '山水钓场',

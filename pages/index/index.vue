@@ -69,22 +69,32 @@ const pondList = ref([
 	{
 		id: 1,
 		pondName: '朝阳湖钓场',
-		location: '北京市朝阳区朝阳公园',
+		location: '北京市朝阳区朝阳公园南路123号456栋',
 		distance: '2.5km',
 		fishSpecies: '鲤鱼',
-		fee: '50元/4小时',
+		fee: '50',
+		pondCount: '3',
 		champion: '钓友老李 68斤',
-		message: '今天鱼情不错，大家快来！'
+		message: '今天鱼情不错，大家快来！',
+		announcement: {
+			topic: '正钓',
+			status: '报名中'
+		}
 	},
 	{
 		id: 2,
 		pondName: '海滨水库',
-		location: '北京市海淀区上庄水库',
+		location: '北京市海淀区上庄水库东侧停车场附近',
 		distance: '5.8km',
 		fishSpecies: '草鱼',
-		fee: '80元/6小时',
+		fee: '80',
+		pondCount: '5',
 		champion: '钓友小王 45斤',
-		message: '夜钓环境很好，鱼情稳定！'
+		message: '夜钓环境很好，鱼情稳定！',
+		announcement: {
+			topic: '夜钓',
+			status: '进行中'
+		}
 	},
 	{
 		id: 3,
@@ -92,9 +102,14 @@ const pondList = ref([
 		location: '北京市丰台区南苑',
 		distance: '8.2km',
 		fishSpecies: '鲫鱼',
-		fee: '60元/6小时',
+		fee: '60',
+		pondCount: '2',
 		champion: '钓友老张 32斤',
-		message: '新手友好，环境干净！'
+		message: '新手友好，环境干净！',
+		announcement: {
+			topic: '新手场',
+			status: '已满员'
+		}
 	},
 	{
 		id: 4,
@@ -102,7 +117,8 @@ const pondList = ref([
 		location: '北京市通州区运河公园',
 		distance: '12.5km',
 		fishSpecies: '鲤鱼',
-		fee: '免费',
+		fee: '0',
+		pondCount: '1',
 		champion: '钓友老刘 28斤',
 		message: '环境清幽，适合休闲垂钓'
 	}
@@ -176,7 +192,7 @@ const goToPondDetail = (pond) => {
 		// 跳转到钓场主页，传递鱼塘ID
 		console.log('准备跳转到钓场详情页:', pond.id, pond.pondName)
 		uni.navigateTo({
-			url: `/pages/pond/detail?pondId=${pond.id}&pondName=${encodeURIComponent(pond.pondName)}`
+			url: `/pages/fishingField/detail?pondId=${pond.id}&pondName=${encodeURIComponent(pond.pondName)}`
 		})
 	} else {
 		console.log('钓场数据格式不正确:', pond)
@@ -212,7 +228,7 @@ onUnmounted(() => {
 })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .container {
 	padding: 0;
 	min-height: 100vh;
@@ -399,14 +415,8 @@ onUnmounted(() => {
 
 /* 内容区域 */
 .content-area {
-	padding: 15rpx 15rpx;
+	padding: 20rpx 15rpx 15rpx 15rpx;
 	background-color: #f0f0f0;
-}
-
-.pond-list {
-	display: flex;
-	flex-direction: column;
-	gap: 5rpx;
 }
 
 /* 钓场列表样式 */

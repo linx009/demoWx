@@ -7,319 +7,83 @@
 					<text class="back-icon">←</text>
 				</view>
 				<view class="nav-center">
-					<text class="nav-title">{{ pondDetail.pondName }}</text>
+					<text class="nav-title">{{ pondName }}</text>
 				</view>
 				<view class="nav-right"></view>
 			</view>
 		</view>
 
-		<!-- 轮播图 -->
-		<view class="photos-section">
-			<swiper class="photo-swiper" indicator-dots="true" autoplay="true">
-				<swiper-item v-for="(photo, index) in pondDetail.photos" :key="index">
-					<image :src="photo" class="pond-photo" mode="aspectFill"></image>
-				</swiper-item>
-			</swiper>
-			<!-- 关注按钮悬浮在轮播图左上角 -->
-			<view class="follow-btn-overlay" @click="toggleFollow">
-				<text class="follow-icon">{{ isFollowed ? '✓' : '+' }}</text>
-				<text class="follow-text">{{ isFollowed ? '已关注' : '关注' }}</text>
-			</view>
-		</view>
-
-		<!-- 钓场公告栏 -->
-		<view class="announcement-section">
-			<view class="announcement-title">
-				<text class="announcement-title-text">公告</text>
-			</view>
-			<view class="announcement-content">
-				<text class="announcement-text">{{ pondDetail.bossMessage }}</text>
-			</view>
-		</view>
-
-
-		<!-- 钓场信息 -->
-		<view class="info-section">
-			<view class="info-content">
-				<view class="info-item">
-					<text class="info-label">地址:</text>
-					<text class="info-value">{{ pondDetail.location }}</text>
-					<view class="map-icon" @click="openMap">
-						<text class="map-icon-text">📍</text>
-					</view>
-				</view>
-				<view class="info-row">
-					<view class="info-item-half">
-						<text class="info-label">营业时间:</text>
-						<text class="info-value">{{ pondDetail.businessHours }}</text>
-					</view>
-					<view class="info-item-half">
-						<text class="info-label">距离您:</text>
-						<text class="info-value">{{ pondDetail.distance }}</text>
-					</view>
-				</view>
-				<view class="info-row">
-					<view class="info-item-half">
-						<text class="info-label">电话:</text>
-						<text class="info-value">{{ pondDetail.phone }}</text>
-					</view>
-					<view class="info-item-half">
-						<text class="info-label">微信:</text>
-						<text class="info-value">{{ pondDetail.wechat }}</text>
-					</view>
-				</view>
-			</view>
-		</view>
-
-		<!-- 分隔线 -->
-		<view class="divider"></view>
-
-		<!-- 鱼塘经营 -->
-		<view class="business-section">
-			<view class="business-content">
-				<!-- 鱼塘卡片：展示单个鱼塘的详细信息 -->
-				<view class="pond-card" v-for="(pond, index) in pondDetail.ponds" :key="index" @click="goToPond(pond)">
-					<view class="card-header">
-						<text class="pond-name">{{ pond.name }}</text>
-						<text class="pond-price">{{ formatPrice(pond.price) }}</text>
-					</view>
-					<view class="card-content">
-						<!-- 第一行：回鱼与底鱼 -->
-						<view class="card-row">
-							<view class="card-item">
-								<text class="card-label">回鱼：</text>
-								<text class="card-value">{{ pond.returnPrice }}</text>
-							</view>
-							<view class="card-item">
-								<text class="card-label">底鱼：</text>
-								<text class="card-value">{{ pond.baseFish }}</text>
-							</view>
-						</view>
-						<!-- 第二行：钓位数与选位方式 -->
-						<view class="card-row">
-							<view class="card-item">
-								<text class="card-label">钓位数：</text>
-								<text class="card-value">{{ pond.spots }}个</text>
-							</view>
-							<view class="card-item">
-								<text class="card-label">选位方式：</text>
-								<text class="card-value">{{ pond.selectionMethod || '先到先得' }}</text>
-							</view>
-						</view>
-						<!-- 第三行：作钓时长与上日坑冠 -->
-						<view class="card-row">
-							<view class="card-item">
-								<text class="card-label">作钓时长：</text>
-								<text class="card-value">{{ pond.duration }}</text>
-							</view>
-							<view class="card-item">
-								<text class="card-label">上日坑冠：</text>
-								<text class="card-value">{{ pond.champion }}</text>
-							</view>
-						</view>
-					</view>
-					<!-- 我要购票按钮 - 单独一行，位于卡片底部 -->
-					<view class="fishing-button-container">
-						<view class="fishing-button">
-							<text class="fishing-button-text">我要购票</text>
-						</view>
-					</view>
-				</view>
-			</view>
-		</view>
-
-		<!-- 分隔线 -->
-		<view class="divider"></view>
-
-		<!-- 活动公告 -->
-		<view class="activity-section">
-			<view class="section-title">活动公告</view>
-			<view class="activity-content">
-				<view class="activity-item" v-for="(activity, index) in pondDetail.activities" :key="index" @click="goToActivity(activity)">
-					<view class="activity-header">
-						<text class="activity-title">{{ activity.title }}</text>
-						<text class="activity-date">{{ activity.date }}</text>
-					</view>
-					<text class="activity-content-text">{{ activity.content }}</text>
-					<!-- 活动状态栏 -->
-					<view class="activity-status-container">
-						<view class="activity-status" :class="getStatusClass(activity.status)">
-							<text class="activity-status-text">{{ activity.status }}</text>
-						</view>
-					</view>
-				</view>
-			</view>
-		</view>
+		<!-- 一号塘组件 -->
+		<PondDetail :pondData="pondData" />
 	</view>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
-
-// 关注状态
-const isFollowed = ref(false)
+import PondDetail from '@/components/PondDetail.vue'
 
 // 页面数据
-const pondDetail = ref({
-	pondName: '朝阳湖钓场',
-	fullName: '朝阳湖休闲垂钓中心',
-	manager: '张主管',
-	location: '北京市朝阳区朝阳公园内',
-	distance: '距离2.5km',
-	businessHours: '06:00-18:00',
-	phone: '138****8888',
-	wechat: 'chaoyanghu888',
-	bossMessage: '欢迎来到朝阳湖钓场！我们提供优质的垂钓环境，专业的服务团队，让您享受钓鱼的乐趣。今天鱼情不错，大家快来！',
-	photos: [
-		'https://picsum.photos/400/300?random=pond1',
-		'https://picsum.photos/400/300?random=pond2',
-		'https://picsum.photos/400/300?random=pond3'
+const pondName = ref('一号塘')
+const pondData = ref({
+	id: 1,
+	name: '一号塘',
+	description: '标准竞技池，适合新手和高手',
+	// 新增字段
+	fishSpecies: '鲤鱼、鲫鱼、草鱼',
+	returnPrice: '4元/斤',
+	duration: '4小时',
+	rodLimit: '每人限用一根钓竿',
+	baitLimit: '禁止使用活饵，只允许使用商品饵料',
+	baseFish: '5000斤',
+	selectionMethod: '先到先得',
+	positionChange: '允许更换钓位',
+	// 钓位信息 - 24个钓位分布在上下两边
+	positions: [
+		// 上边钓位 (1-12)
+		{ id: 1, x: 5, y: 5, showNumber: true },   // 左上角
+		{ id: 2, x: 12, y: 5, showNumber: false },
+		{ id: 3, x: 19, y: 5, showNumber: false },
+		{ id: 4, x: 26, y: 5, showNumber: false },
+		{ id: 5, x: 33, y: 5, showNumber: false },
+		{ id: 6, x: 40, y: 5, showNumber: false },
+		{ id: 7, x: 50, y: 5, showNumber: true },  // 上边中间
+		{ id: 8, x: 60, y: 5, showNumber: false },
+		{ id: 9, x: 67, y: 5, showNumber: false },
+		{ id: 10, x: 74, y: 5, showNumber: false },
+		{ id: 11, x: 81, y: 5, showNumber: false },
+		{ id: 12, x: 88, y: 5, showNumber: false },
+		{ id: 13, x: 95, y: 5, showNumber: true }, // 右上角
+		
+		// 下边钓位 (14-24)
+		{ id: 14, x: 95, y: 95, showNumber: true }, // 右下角
+		{ id: 15, x: 88, y: 95, showNumber: false },
+		{ id: 16, x: 81, y: 95, showNumber: false },
+		{ id: 17, x: 74, y: 95, showNumber: false },
+		{ id: 18, x: 67, y: 95, showNumber: false },
+		{ id: 19, x: 60, y: 95, showNumber: false },
+		{ id: 20, x: 50, y: 95, showNumber: true }, // 下边中间
+		{ id: 21, x: 40, y: 95, showNumber: false },
+		{ id: 22, x: 33, y: 95, showNumber: false },
+		{ id: 23, x: 26, y: 95, showNumber: false },
+		{ id: 24, x: 19, y: 95, showNumber: false },
+		{ id: 25, x: 12, y: 95, showNumber: false },
+		{ id: 26, x: 5, y: 95, showNumber: true }   // 左下角
 	],
-	ponds: [
-		{
-			id: 1,
-			name: '一号塘',
-			price: '50元/4小时',
-			returnPrice: '4元/斤',
-			baseFish: '5000斤',
-			duration: '4小时',
-			champion: '钓友老李 68斤',
-			spots: 25,
-			selectionMethod: '先到先得'
-		},
-		{
-			id: 2,
-			name: '二号塘',
-			price: '80元/6小时',
-			returnPrice: '5元/斤',
-			baseFish: '8000斤',
-			duration: '6小时',
-			champion: '钓友小王 85斤',
-			spots: 30,
-			selectionMethod: '抽签选位'
-		},
-		{
-			id: 3,
-			name: '三号塘',
-			price: '120元/8小时',
-			returnPrice: '6元/斤',
-			baseFish: '12000斤',
-			duration: '8小时',
-			champion: '钓友老张 120斤',
-			spots: 20,
-			selectionMethod: '预约选位'
-		}
+	// 章程内容
+	rules: [
+		'12. 垂钓时间：早上6:00-晚上18:00',
+		'13. 禁止使用活饵，只允许使用商品饵料',
+		'14. 每人限用一根钓竿，禁止多竿垂钓',
+		'15. 钓获的鱼必须放生，禁止带走',
+		'16. 保持钓位整洁，垃圾请带走',
+		'17. 禁止大声喧哗，影响他人垂钓',
+		'18. 遵守钓场工作人员的管理'
 	],
-	activities: [
-		{
-			id: 1,
-			title: '周末钓鱼大赛',
-			date: '2024-01-20',
-			content: '本周末举办钓鱼大赛，冠军可获得现金奖励1000元，欢迎各位钓友踊跃参加！',
-			status: '报名中'
-		},
-		{
-			id: 2,
-			title: '新鱼投放通知',
-			date: '2024-01-18',
-			content: '本周三将投放新鲜鲤鱼3000斤，鱼情将会更好，请大家关注！',
-			status: '未开始'
-		},
-		{
-			id: 3,
-			title: '钓场维护通知',
-			date: '2024-01-15',
-			content: '本周一钓场进行设备维护，暂停营业一天，周二正常营业。',
-			status: '报满'
-		}
-	]
 })
 
-// 页面方法
+// 返回上一页
 const goBack = () => {
 	uni.navigateBack()
-}
-
-// 切换关注状态
-const toggleFollow = () => {
-	isFollowed.value = !isFollowed.value
-	uni.showToast({
-		title: isFollowed.value ? '已关注' : '已取消关注',
-		icon: 'none'
-	})
-}
-
-// 打开地图
-const openMap = () => {
-	uni.showToast({
-		title: '打开地图定位',
-		icon: 'none'
-	})
-	// 这里可以调用地图API
-	// uni.openLocation({
-	//     latitude: 39.908823,
-	//     longitude: 116.397470,
-	//     name: pondDetail.value.pondName,
-	//     address: pondDetail.value.location
-	// })
-}
-
-// 进入活动公告页面
-const goToActivityPage = () => {
-	uni.showToast({
-		title: '进入活动公告页面',
-		icon: 'none'
-	})
-	// 这里可以跳转到活动公告页面
-	// uni.navigateTo({
-	//     url: '/pages/activity/list'
-	// })
-}
-
-// 格式化价格显示：从"50元/4小时"简化为"50元"
-const formatPrice = (price) => {
-	if (!price) return ''
-	// 提取价格部分，去掉时间部分
-	const priceMatch = price.match(/(\d+)元/)
-	return priceMatch ? `${priceMatch[1]}元` : price
-}
-
-// 跳转到鱼塘页面
-const goToPond = (pond) => {
-	uni.showToast({
-		title: `进入${pond.name}`,
-		icon: 'none'
-	})
-	// 这里可以跳转到具体的鱼塘页面
-	// uni.navigateTo({
-	//     url: `/pages/pond/pond-detail?pondId=${pond.id}`
-	// })
-}
-
-// 跳转到活动页面
-const goToActivity = (activity) => {
-	uni.showToast({
-		title: `查看${activity.title}`,
-		icon: 'none'
-	})
-	// 这里可以跳转到活动详情页面
-	// uni.navigateTo({
-	//     url: `/pages/activity/detail?activityId=${activity.id}`
-	// })
-}
-
-// 获取活动状态样式类
-const getStatusClass = (status) => {
-	switch (status) {
-		case '未开始':
-			return 'status-not-started'
-		case '报名中':
-			return 'status-registering'
-		case '报满':
-			return 'status-full'
-		default:
-			return 'status-default'
-	}
 }
 
 // 页面加载时接收参数
@@ -328,10 +92,13 @@ onMounted(() => {
 	const currentPage = pages[pages.length - 1]
 	const options = currentPage.options
 	
-	console.log('钓场详情页加载，接收参数:', options)
+	console.log('鱼塘页面加载，接收参数:', options)
 	if (options.pondId) {
 		console.log('获取鱼塘详情，ID:', options.pondId)
-		console.log('钓场名称:', options.pondName)
+		console.log('鱼塘名称:', options.pondName)
+		// 解码URL编码的鱼塘名称
+		const decodedPondName = options.pondName ? decodeURIComponent(options.pondName) : '一号塘'
+		pondName.value = decodedPondName
 	}
 })
 </script>
@@ -339,11 +106,11 @@ onMounted(() => {
 <style scoped>
 .container {
 	min-height: 100vh;
-	background-color: #ffffff;
+	background-color: #f0f0f0;
 }
 
 .navbar {
-	background: #ffffff;
+	background: #fbfbfb;
 	border-bottom: 1rpx solid #e5e5e5;
 	padding: 0;
 	position: sticky;
@@ -381,7 +148,7 @@ onMounted(() => {
 }
 
 .nav-title {
-	font-size: 40rpx; /* 调大导航标题字体 */
+	font-size: 40rpx;
 	font-weight: 600;
 	color: #e74c3c;
 }
@@ -390,420 +157,4 @@ onMounted(() => {
 	width: 80rpx;
 	height: 80rpx;
 }
-
-/* 轮播图样式 */
-.photos-section {
-	padding: 0;
-	border-bottom: 1rpx solid #f0f0f0;
-	position: relative;
-}
-
-.photo-swiper {
-	height: 300rpx;
-}
-
-.pond-photo {
-	width: 100%;
-	height: 100%;
-}
-
-/* 悬浮关注按钮 */
-.follow-btn-overlay {
-	position: absolute;
-	top: 20rpx;
-	left: 20rpx;
-	display: flex;
-	align-items: center;
-	gap: 8rpx;
-	padding: 15rpx 25rpx;
-	background: rgba(0, 0, 0, 0.7);
-	border-radius: 25rpx;
-	backdrop-filter: blur(10rpx);
-	z-index: 10;
-	transition: all 0.3s ease;
-}
-
-.follow-btn-overlay:active {
-	transform: scale(0.95);
-	background: rgba(0, 0, 0, 0.8);
-}
-
-.follow-icon {
-	font-size: 32rpx;
-	color: #07c160;
-	font-weight: 700;
-}
-
-.follow-text {
-	font-size: 28rpx;
-	color: #ffffff;
-	font-weight: 600;
-}
-
-/* 钓场公告栏样式 */
-.announcement-section {
-	height: 200rpx;
-	background: #07c160;
-	display: flex;
-	position: relative;
-}
-
-.announcement-title {
-	background: #e74c3c; /* 改为红色背景 */
-	width: 100rpx;
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	position: relative;
-}
-
-.announcement-title::after {
-	content: '';
-	position: absolute;
-	right: -1rpx;
-	top: 0;
-	bottom: 0;
-	width: 1rpx;
-	background: #e74c3c; /* 分隔线颜色与背景色保持一致 */
-}
-
-.announcement-title-text {
-	color: #ffffff;
-	font-size: 40rpx; /* 调大公告标题字体 */
-	font-weight: 600;
-	writing-mode: vertical-rl;
-	text-orientation: mixed;
-	letter-spacing: 8rpx;
-}
-
-.announcement-content {
-	flex: 1;
-	padding: 30rpx;
-	display: flex;
-	align-items: center;
-}
-
-.announcement-text {
-	color: #ffffff;
-	font-size: 34rpx; /* 调大公告内容字体 */
-	line-height: 1.6;
-	display: block;
-}
-
-
-/* 分隔线样式 */
-.divider {
-	height: 20rpx;
-	background: #f8f9fa;
-	border-top: 1rpx solid #e5e5e5;
-	border-bottom: 1rpx solid #e5e5e5;
-}
-
-/* 区域标题样式 */
-.section-title {
-	font-size: 36rpx; /* 调大区域标题字体 */
-	font-weight: 600;
-	color: #333;
-	padding: 30rpx 30rpx 20rpx 30rpx;
-	background: #ffffff;
-}
-
-/* 钓场信息样式 */
-.info-section {
-	background: #ffffff;
-	padding: 0 30rpx 20rpx 30rpx;
-}
-
-.info-content {
-	display: flex;
-	flex-direction: column;
-	gap: 15rpx;
-}
-
-.info-item {
-	display: flex;
-	align-items: center;
-	padding: 12rpx 0;
-}
-
-.info-row {
-	display: flex;
-	gap: 20rpx;
-}
-
-.info-item-half {
-	flex: 1;
-	display: flex;
-	align-items: center;
-	padding: 12rpx 0;
-}
-
-.info-label {
-	font-size: 30rpx; /* 调大信息标签字体 */
-	color: #666;
-	width: 140rpx;
-}
-
-.info-value {
-	font-size: 30rpx; /* 调大信息值字体 */
-	color: #333;
-	font-weight: 500;
-	flex: 1;
-}
-
-.map-icon {
-	padding: 8rpx;
-	background: #f0f0f0;
-	border-radius: 50%;
-	margin-left: 10rpx;
-	transition: all 0.3s ease;
-}
-
-.map-icon:active {
-	background: #e0e0e0;
-}
-
-.map-icon-text {
-	font-size: 24rpx;
-}
-
-/* 鱼塘经营样式 - 包含鱼塘卡片 */
-.business-section {
-	background: #ffffff;
-}
-
-.business-content {
-	display: flex;
-	flex-direction: column;
-	gap: 20rpx;
-	padding: 30rpx;
-}
-
-.pond-card {
-	background: #ffffff;
-	border: 1rpx solid #e5e5e5;
-	border-radius: 12rpx;
-	padding: 25rpx;
-	box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.15); /* 投影颜色加深 */
-	transition: all 0.3s ease;
-	position: relative;
-}
-
-.pond-card:active {
-	transform: scale(0.98);
-	box-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.1);
-}
-
-.card-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 20rpx;
-	padding-bottom: 15rpx;
-	border-bottom: 1rpx solid #999999; /* 分隔线颜色调整 */
-	padding-right: 20rpx; /* 票价不要太靠边 */
-}
-
-.pond-name {
-	font-size: 36rpx; /* 增大字体 */
-	font-weight: 600;
-	color: #333;
-}
-
-.pond-price {
-	font-size: 32rpx; /* 增大字体 */
-	color: #e74c3c;
-	font-weight: 600;
-}
-
-.card-content {
-	display: flex;
-	flex-direction: column;
-	gap: 25rpx; /* 进一步增大行间距 */
-	margin-bottom: 20rpx;
-}
-
-.card-row {
-	display: flex;
-	justify-content: space-between;
-	gap: 20rpx;
-}
-
-.card-item {
-	display: flex;
-	align-items: center;
-	flex: 1;
-}
-
-.card-label {
-	font-size: 28rpx; /* 调大卡片标签字体 */
-	color: #666;
-	margin-right: 8rpx;
-}
-
-.card-value {
-	font-size: 28rpx; /* 调大卡片值字体 */
-	color: #333;
-	font-weight: 500;
-}
-
-/* 我要钓鱼按钮容器样式 */
-.fishing-button-container {
-	display: flex;
-	justify-content: center;
-	margin-top: 20rpx;
-	padding-top: 15rpx;
-	/* 去掉分隔线 */
-}
-
-/* 我要钓鱼按钮样式 - 悬浮型、线框型 */
-.fishing-button {
-	background: transparent;
-	border: 2rpx solid #07c160;
-	border-radius: 20rpx;
-	padding: 10rpx 80rpx; /* 高度减小，宽度加长一倍 */
-	box-shadow: 0 4rpx 12rpx rgba(7, 193, 96, 0.2);
-	transition: all 0.3s ease;
-	position: relative;
-	overflow: hidden;
-}
-
-.fishing-button::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: -100%;
-	width: 100%;
-	height: 100%;
-	background: linear-gradient(90deg, transparent, rgba(7, 193, 96, 0.1), transparent);
-	transition: left 0.5s ease;
-}
-
-.fishing-button:active {
-	transform: translateY(2rpx);
-	box-shadow: 0 2rpx 8rpx rgba(7, 193, 96, 0.3);
-}
-
-.fishing-button:active::before {
-	left: 100%;
-}
-
-.fishing-button-text {
-	font-size: 28rpx;
-	color: #07c160;
-	font-weight: 600;
-	position: relative;
-	z-index: 1;
-}
-
-/* 活动公告样式 */
-.activity-section {
-	background: #ffffff;
-}
-
-.activity-content {
-	display: flex;
-	flex-direction: column;
-	gap: 20rpx;
-	padding: 0 30rpx 30rpx 30rpx;
-}
-
-.activity-item {
-	background: #ffffff;
-	border: 1rpx solid #e5e5e5;
-	border-radius: 12rpx;
-	padding: 25rpx;
-	transition: all 0.3s ease;
-}
-
-.activity-item:active {
-	transform: scale(0.98);
-	background: #f8f9fa;
-}
-
-.activity-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 15rpx;
-}
-
-.activity-title {
-	font-size: 30rpx;
-	font-weight: 600;
-	color: #333;
-	flex: 1;
-}
-
-.activity-date {
-	font-size: 24rpx;
-	color: #999;
-}
-
-.activity-content-text {
-	font-size: 26rpx;
-	color: #666;
-	line-height: 1.5;
-}
-
-/* 活动状态栏样式 */
-.activity-status-container {
-	margin-top: 20rpx;
-	padding-top: 15rpx;
-	border-top: 1rpx solid #999999; /* 分隔线样式与鱼塘卡片相同 */
-	display: flex;
-	justify-content: center;
-}
-
-.activity-status {
-	padding: 8rpx 20rpx;
-	border-radius: 15rpx;
-	background: #f5f5f5;
-	border: 1rpx solid #e0e0e0;
-}
-
-.activity-status-text {
-	font-size: 24rpx;
-	font-weight: 600;
-}
-
-/* 不同状态的样式 */
-.status-not-started {
-	background: #f0f9ff;
-	border-color: #07c160;
-}
-
-.status-not-started .activity-status-text {
-	color: #07c160; /* 未开始的活动用绿色字体 */
-}
-
-.status-registering {
-	background: #fff7e6;
-	border-color: #ff9500;
-}
-
-.status-registering .activity-status-text {
-	color: #ff9500;
-}
-
-.status-full {
-	background: #fff2f0;
-	border-color: #ff4d4f;
-}
-
-.status-full .activity-status-text {
-	color: #ff4d4f;
-}
-
-.status-default {
-	background: #f5f5f5;
-	border-color: #d9d9d9;
-}
-
-.status-default .activity-status-text {
-	color: #666;
-}
-
 </style>
