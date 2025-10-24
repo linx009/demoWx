@@ -100,6 +100,14 @@ onMounted(() => {
 		const decodedPondName = options.pondName ? decodeURIComponent(options.pondName) : '一号塘'
 		pondName.value = decodedPondName
 	}
+	
+	// 检查是否需要自动切换到指定选项卡
+	if (options.activeTab) {
+		console.log('自动切换到选项卡:', options.activeTab)
+		// 通过事件总线或直接调用组件方法切换到指定选项卡
+		// 这里我们使用一个简单的方法，通过修改pondData来传递activeTab信息
+		pondData.value.activeTab = options.activeTab
+	}
 })
 </script>
 

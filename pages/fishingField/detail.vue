@@ -28,12 +28,15 @@
 		</view>
 
 		<!-- 老板说信息栏 -->
-		<view class="announcement-section">
+		<view class="announcement-section" :class="{ 'expanded': isAnnouncementExpanded }" @click="toggleAnnouncement">
 			<view class="announcement-title">
 				<text class="announcement-title-text">老板说</text>
 			</view>
 			<view class="announcement-content">
-				<text class="announcement-text">{{ pondDetail.bossMessage }}</text>
+				<text class="announcement-text" :class="{ 'expanded': isAnnouncementExpanded }">{{ pondDetail.bossMessage }}</text>
+				<view class="announcement-dropdown-icon" :class="{ 'expanded': isAnnouncementExpanded }">
+					<view class="dropdown-arrow"></view>
+				</view>
 			</view>
 		</view>
 
@@ -76,72 +79,102 @@
 			</view>
 		</view>
 
-		<!-- 钓场内容区背景色 -->
-		<view class="fishing-field-content-bg"></view>
-
-		<!-- 鱼塘经营 -->
-		<view class="business-section">
-			<view class="business-content">
-				<!-- 垂钓流程图 -->
-				<view class="fishing-process-section">
-					<view class="process-title">
-						<text class="process-title-text">垂钓流程</text>
+		<!-- 钓场选项卡 -->
+		<view class="field-tabs-section">
+			<view class="field-tabs-content">
+				<view class="field-tab-buttons">
+					<view class="field-tab-button" :class="{ 'active': activeFieldTab === 'ponds' }" @click="switchFieldTab('ponds')">
+						<text class="field-tab-text wide-spacing">钓塘</text>
 					</view>
-					<view class="process-flow">
-						<!-- 流程步骤 -->
-						<view class="process-step" v-for="(step, index) in fishingProcess" :key="index">
-							<view class="step-circle">
-								<text class="step-text">{{ step.name }}</text>
+					<view class="field-tab-button" :class="{ 'active': activeFieldTab === 'activities' }" @click="switchFieldTab('activities')">
+						<text class="field-tab-text">活动&公告</text>
+					</view>
+					<view class="field-tab-button" :class="{ 'active': activeFieldTab === 'champions' }" @click="switchFieldTab('champions')">
+						<text class="field-tab-text wide-spacing">坑冠</text>
+					</view>
+				</view>
+				
+				<!-- 钓塘内容 -->
+				<view class="field-tab-content" v-if="activeFieldTab === 'ponds'">
+					<!-- 垂钓流程图 -->
+					<view class="fishing-process-section">
+						<view class="process-title">
+							<text class="process-title-text">垂钓流程</text>
+						</view>
+						<view class="process-flow">
+							<!-- 流程步骤 -->
+							<view class="process-step" v-for="(step, index) in fishingProcess" :key="index">
+								<view class="step-circle">
+									<text class="step-text">{{ step.name }}</text>
+								</view>
+								<!-- 箭头（除了最后一步） -->
+								<view class="step-arrow" v-if="index < fishingProcess.length - 1">
+									<text class="arrow-text">→</text>
+								</view>
 							</view>
-							<!-- 箭头（除了最后一步） -->
-							<view class="step-arrow" v-if="index < fishingProcess.length - 1">
-								<text class="arrow-text">→</text>
+						</view>
+					</view>
+					
+					<!-- 鱼塘卡片容器：展示单个鱼塘的详细信息 -->
+					<view class="pond-cards-container">
+						<PondCard 
+							v-for="(pond, index) in pondDetail.ponds" 
+							:key="index" 
+							:pond="pond" 
+							@click="goToPond" 
+						/>
+					</view>
+				</view>
+				
+				<!-- 活动&公告内容 -->
+				<view class="field-tab-content" v-if="activeFieldTab === 'activities'">
+					<view class="activity-content">
+						<view class="activity-item" v-for="(activity, index) in pondDetail.activities" :key="index" @click="goToActivity(activity)">
+							<view class="activity-header">
+								<text class="activity-title">{{ activity.title }}</text>
+								<text class="activity-date">{{ activity.date }}</text>
+							</view>
+							<text class="activity-content-text">{{ activity.content }}</text>
+							<!-- 活动状态栏 -->
+							<view class="activity-status-container">
+								<view class="activity-status" :class="getStatusClass(activity.status)">
+									<text class="activity-status-text">{{ activity.status }}</text>
+								</view>
 							</view>
 						</view>
 					</view>
 				</view>
 				
-				<!-- 鱼塘卡片：展示单个鱼塘的详细信息 -->
-				<PondCard 
-					v-for="(pond, index) in pondDetail.ponds" 
-					:key="index" 
-					:pond="pond" 
-					@click="goToPond" 
-				/>
-			</view>
-		</view>
-
-		<!-- 钓场内容区背景色 -->
-		<view class="fishing-field-content-bg"></view>
-
-		<!-- 活动公告 -->
-		<view class="activity-section">
-			<view class="section-title">活动公告</view>
-			<view class="activity-content">
-				<view class="activity-item" v-for="(activity, index) in pondDetail.activities" :key="index" @click="goToActivity(activity)">
-					<view class="activity-header">
-						<text class="activity-title">{{ activity.title }}</text>
-						<text class="activity-date">{{ activity.date }}</text>
-					</view>
-					<text class="activity-content-text">{{ activity.content }}</text>
-					<!-- 活动状态栏 -->
-					<view class="activity-status-container">
-						<view class="activity-status" :class="getStatusClass(activity.status)">
-							<text class="activity-status-text">{{ activity.status }}</text>
+				<!-- 坑冠内容 -->
+				<view class="field-tab-content" v-if="activeFieldTab === 'champions'">
+					<view class="champion-list">
+						<view class="champion-item" v-for="(record, index) in championHistory" :key="index">
+							<view class="champion-info">
+								<text class="champion-name">{{ record.name }}</text>
+								<text class="champion-weight">{{ record.weight }}斤</text>
+							</view>
+							<view class="champion-date">{{ record.date }}</view>
 						</view>
 					</view>
 				</view>
 			</view>
 		</view>
+
 	</view>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import PondCard from '@/components/PondCard.vue'
 
 // 关注状态
 const isFollowed = ref(false)
+
+// 钓场选项卡状态
+const activeFieldTab = ref('ponds')
+
+// 老板说组件展开状态
+const isAnnouncementExpanded = ref(false)
 
 // 垂钓流程数据
 const fishingProcess = ref([
@@ -149,7 +182,7 @@ const fishingProcess = ref([
 	{ name: '选座' },
 	{ name: '调试' },
 	{ name: '计时' },
-	{ name: '作钓' },
+	{ name: '座钓' },
 	{ name: '回鱼结算' }
 ])
 
@@ -163,7 +196,7 @@ const pondDetail = ref({
 	businessHours: '06:00-18:00',
 	phone: '138****8888',
 	wechat: 'chaoyanghu888',
-	bossMessage: '欢迎来到朝阳湖钓场！我们提供优质的垂钓环境，专业的服务团队，让您享受钓鱼的乐趣。今天鱼情不错，大家快来！',
+	bossMessage: '欢迎来到朝阳湖钓场！我们提供优质的垂钓环境，专业的服务团队，让您享受钓鱼的乐趣。今天鱼情不错，大家快来！我们这里有各种鱼类，包括鲤鱼、草鱼、鲫鱼等，水质清澈，环境优美，是您休闲垂钓的理想选择。',
 	photos: [
 		'https://picsum.photos/400/300?random=pond1',
 		'https://picsum.photos/400/300?random=pond2',
@@ -229,6 +262,15 @@ const pondDetail = ref({
 	]
 })
 
+// 坑冠历史数据
+const championHistory = ref([
+	{ date: '2024-01-20', name: '老李', weight: 68 },
+	{ date: '2024-01-19', name: '小王', weight: 52 },
+	{ date: '2024-01-18', name: '老张', weight: 45 },
+	{ date: '2024-01-17', name: '小刘', weight: 38 },
+	{ date: '2024-01-16', name: '老陈', weight: 42 }
+])
+
 // 页面方法
 const goBack = () => {
 	uni.navigateBack()
@@ -243,8 +285,35 @@ const toggleFollow = () => {
 	})
 }
 
+// 切换钓场选项卡
+const switchFieldTab = (tab) => {
+	activeFieldTab.value = tab
+	// 切换选项卡时收回老板说组件
+	isAnnouncementExpanded.value = false
+}
+
+// 切换老板说组件展开状态
+const toggleAnnouncement = (event) => {
+	event.stopPropagation() // 阻止事件冒泡
+	isAnnouncementExpanded.value = !isAnnouncementExpanded.value
+}
+
+// 处理滚动事件
+const handleScroll = () => {
+	// 滚动时关闭展板
+	isAnnouncementExpanded.value = false
+}
+
+// 页面卸载时清理事件监听
+onUnmounted(() => {
+	document.removeEventListener('scroll', handleScroll)
+	document.removeEventListener('touchmove', handleScroll)
+})
+
 // 打开地图
 const openMap = () => {
+	// 打开地图时收回老板说组件
+	isAnnouncementExpanded.value = false
 	uni.showToast({
 		title: '打开地图定位',
 		icon: 'none'
@@ -293,6 +362,8 @@ const goToActivity = (activity) => {
 
 // 跳转到活动有奖页面
 const goToActivityReward = () => {
+	// 跳转时收回老板说组件
+	isAnnouncementExpanded.value = false
 	console.log('跳转到活动有奖页面')
 	uni.showToast({
 		title: '活动有奖功能开发中',
@@ -329,13 +400,17 @@ onMounted(() => {
 		console.log('获取鱼塘详情，ID:', options.pondId)
 		console.log('钓场名称:', options.pondName)
 	}
+	
+	// 添加滚动事件监听
+	document.addEventListener('scroll', handleScroll)
+	document.addEventListener('touchmove', handleScroll)
 })
 </script>
 
 <style scoped>
 .container {
 	min-height: 100vh;
-	background-color: #f0f0f0;
+	background-color: #ffffff;
 }
 
 .navbar {
@@ -392,15 +467,20 @@ onMounted(() => {
 	padding: 0;
 	border-bottom: 1rpx solid #f0f0f0;
 	position: relative;
+	height: 40vw;
+	max-height: 300rpx;
+	min-height: 200rpx;
+	overflow: hidden;
 }
 
 .photo-swiper {
-	height: 300rpx;
+	height: 100%;
 }
 
 .pond-photo {
 	width: 100%;
 	height: 100%;
+	object-fit: cover;
 }
 
 /* 悬浮关注按钮 */
@@ -438,21 +518,36 @@ onMounted(() => {
 
 /* 钓场公告栏样式 */
 .announcement-section {
-	height: 200rpx;
+	height: 20vw;
+	max-height: 200rpx;
+	min-height: 120rpx;
 	background: #07c160;
 	display: flex;
 	position: relative;
+	overflow: hidden;
+	transition: all 0.3s ease;
+	cursor: pointer;
+	align-items: stretch;
 }
+
+.announcement-section.expanded {
+	height: auto;
+	max-height: 50vh;
+	min-height: 200rpx;
+}
+
 
 .announcement-title {
 	background: #e74c3c; /* 改为红色背景 */
 	width: 100rpx;
-	height: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	position: relative;
+	transition: all 0.3s ease;
+	flex-shrink: 0;
+	align-self: stretch;
 }
 
 .announcement-title::after {
@@ -467,7 +562,7 @@ onMounted(() => {
 
 .announcement-title-text {
 	color: #ffffff;
-	font-size: 40rpx; /* 调大公告标题字体 */
+	font-size: 32rpx; /* 减小标题字体 */
 	font-weight: 600;
 	writing-mode: vertical-rl;
 	text-orientation: mixed;
@@ -478,19 +573,66 @@ onMounted(() => {
 	flex: 1;
 	padding: 30rpx;
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
+	overflow: visible;
+	position: relative;
 }
 
 .announcement-text {
 	color: #ffffff;
-	font-size: 34rpx; /* 调大公告内容字体 */
+	font-size: 34rpx;
 	line-height: 1.6;
 	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	white-space: normal;
+	letter-spacing: 2rpx;
+	transition: all 0.3s ease;
+}
+
+.announcement-text.expanded {
+	-webkit-line-clamp: unset;
+	display: block;
+	white-space: normal;
+	overflow: visible;
+	text-overflow: unset;
+}
+
+/* 指向标样式 */
+.announcement-dropdown-icon {
+	position: absolute;
+	right: 20rpx;
+	bottom: 20rpx;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40rpx;
+	height: 40rpx;
+	transition: all 0.3s ease;
+}
+
+.announcement-dropdown-icon.expanded {
+	transform: rotate(90deg);
+}
+
+.dropdown-arrow {
+	width: 0;
+	height: 0;
+	border-left: 12rpx solid #ffffff;
+	border-top: 10rpx solid transparent;
+	border-bottom: 10rpx solid transparent;
+	transition: all 0.3s ease;
 }
 
 /* 活动有奖单元格样式 */
 .activity-reward-cell {
 	width: 100%;
+	height: 10vw;
+	max-height: 100rpx;
+	min-height: 70rpx;
 	background: #fff8e1;
 	border-left: 2rpx solid #ffa726;
 	padding: 20rpx 30rpx;
@@ -618,7 +760,7 @@ onMounted(() => {
 /* 垂钓流程图样式 */
 .fishing-process-section {
 	background: transparent;
-	padding: 0 0 70rpx 0;
+	padding: 40rpx 0 70rpx 0;
 	margin-bottom: 0;
 }
 
@@ -630,7 +772,7 @@ onMounted(() => {
 .process-title-text {
 	font-size: 32rpx;
 	font-weight: 600;
-	color: #333;
+	color: #666;
 }
 
 .process-flow {
@@ -802,5 +944,112 @@ onMounted(() => {
 .status-default .activity-status-text {
 	color: #666;
 }
+
+/* 钓场选项卡样式 */
+.field-tabs-section {
+	background: #ffffff;
+	margin-top: 50rpx;
+	margin-bottom: 30rpx;
+}
+
+.field-tabs-content {
+	padding: 0 30rpx 30rpx 30rpx;
+}
+
+.field-tab-buttons {
+	display: flex;
+	background: transparent;
+	border-radius: 8rpx;
+	padding: 0;
+	margin-bottom: 20rpx;
+	gap: 10rpx;
+}
+
+.field-tab-button {
+	flex: 1;
+	text-align: center;
+	padding: 15rpx 0;
+	border-radius: 8rpx;
+	background: #f5f5f5;
+	transition: all 0.3s ease;
+}
+
+.field-tab-button.active {
+	background: #07c160;
+}
+
+.field-tab-text {
+	font-size: 32rpx;
+	color: #666;
+	font-weight: 500;
+	letter-spacing: 2rpx;
+}
+
+.field-tab-button.active .field-tab-text {
+	color: #ffffff;
+	font-weight: 600;
+}
+
+.wide-spacing {
+	letter-spacing: 8rpx !important;
+}
+
+.field-tab-content {
+	min-height: 200rpx;
+	width: 100%;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+/* 鱼塘卡片容器样式 */
+.pond-cards-container {
+	display: flex;
+	flex-direction: column;
+	gap: 8rpx; /* 减少间距，因为卡片本身已有margin */
+	overflow: visible; /* 确保投影不被切割 */
+}
+
+/* 坑冠列表样式 */
+.champion-list {
+	display: flex;
+	flex-direction: column;
+	gap: 15rpx;
+}
+
+.champion-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20rpx 0;
+	border-bottom: 1rpx solid #f0f0f0;
+}
+
+.champion-item:last-child {
+	border-bottom: none;
+}
+
+.champion-date {
+	font-size: 26rpx;
+	color: #999;
+}
+
+.champion-info {
+	display: flex;
+	align-items: center;
+	gap: 15rpx;
+}
+
+.champion-name {
+	font-size: 30rpx;
+	color: #333;
+	font-weight: 500;
+}
+
+.champion-weight {
+	font-size: 28rpx;
+	color: #07c160;
+	font-weight: 600;
+}
+
 
 </style>

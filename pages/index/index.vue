@@ -423,7 +423,8 @@ onUnmounted(() => {
 .pond-list {
 	display: flex;
 	flex-direction: column;
-	gap: 20rpx;
+	gap: 8rpx; /* 减少间距，因为卡片本身已有margin */
+	overflow: visible; /* 确保投影不被切割 */
 }
 
 .card-header-new {

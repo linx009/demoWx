@@ -114,11 +114,12 @@ export default {
 
 /* 钓场名片容器 */
 .fishing-field-card {
-	background: #fafbfc;
+	background: #ffffff;
 	border-radius: 16rpx;
-	box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.08);
+	margin: 8rpx; /* 为投影留出空间 */
+	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.12), 0 2rpx 8rpx rgba(0, 0, 0, 0.08);
 	border: 1rpx solid #e9ecef;
-	overflow: hidden;
+	overflow: visible; /* 允许投影显示 */
 	transition: all 0.3s ease;
 	display: flex;
 	flex-direction: column;

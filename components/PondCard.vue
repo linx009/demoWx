@@ -83,6 +83,7 @@ const handleClick = () => {
 	console.log('PondCard点击事件触发:', props.pond)
 	emit('click', props.pond)
 }
+
 </script>
 
 <style scoped>
@@ -91,14 +92,15 @@ const handleClick = () => {
 	background: #ffffff;
 	border-radius: 12rpx;
 	padding: 25rpx;
-	box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.15);
+	margin: 8rpx; /* 为投影留出空间 */
+	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.12), 0 2rpx 8rpx rgba(0, 0, 0, 0.08);
 	transition: all 0.3s ease;
 	position: relative;
 }
 
 .pond-card:active {
 	transform: scale(0.98);
-	box-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.1);
+	box-shadow: 2rpx 2rpx 8rpx rgba(0, 0, 0, 0.15), 1rpx 1rpx 4rpx rgba(0, 0, 0, 0.1);
 }
 
 /* 卡片头部 */
@@ -167,9 +169,9 @@ const handleClick = () => {
 /* 购票按钮 */
 .fishing-button {
 	background: transparent;
-	border: 2rpx solid #07c160;
+	border: 1rpx solid #07c160;
 	border-radius: 20rpx;
-	padding: 10rpx 80rpx;
+	padding: 6rpx 80rpx;
 	box-shadow: 0 4rpx 12rpx rgba(7, 193, 96, 0.2);
 	transition: all 0.3s ease;
 	position: relative;
