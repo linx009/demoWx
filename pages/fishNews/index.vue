@@ -232,7 +232,7 @@ onUnmounted(() => {
 .container {
 	padding: 0;
 	min-height: 100vh;
-	background-color: $uni-bg-color-tabbar;
+	background-color: #fbfbfb;
 	position: relative;
 }
 
@@ -416,7 +416,7 @@ onUnmounted(() => {
 /* 内容区域 */
 .content-area {
 	padding: 20rpx 15rpx 15rpx 15rpx;
-	background-color: #f0f0f0;
+	background-color: #fbfbfb;
 }
 
 /* 钓场列表样式 */
@@ -643,7 +643,7 @@ onUnmounted(() => {
 	
 	.content-area {
 		padding: 10rpx 10rpx;
-		background-color: #f0f0f0;
+		background-color: #fbfbfb;
 	}
 	
 	.pond-list {

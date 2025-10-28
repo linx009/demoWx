@@ -1,39 +1,40 @@
 {
 	"pages": [
 		{
-			"path": "pages/index/index",
+			"path": "pages/fishNews/index",
 			"style": {
 				"navigationBarTitleText": "鱼讯"
 			}
 		},
 		{
-			"path": "pages/contacts/index",
-			"style": {
-				"navigationBarTitleText": "联系人"
-			}
-		},
-		{
-			"path": "pages/apps/index",
+			"path": "pages/magicFishingBox/index",
 			"style": {
 				"navigationBarTitleText": "神奇钓箱"
 			}
 		},
 		{
-			"path": "pages/profile/index",
+			"path": "pages/mine/index",
 			"style": {
 				"navigationBarTitleText": "我的"
 			}
 		},
 		{
-			"path": "pages/profile/auth",
+			"path": "pages/mine/auth",
 			"style": {
 				"navigationBarTitleText": "身份认证"
 			}
 		},
 		{
-			"path": "pages/pond/list",
+			"path": "pages/mine/personalInfo",
 			"style": {
-				"navigationBarTitleText": "鱼塘"
+				"navigationBarTitleText": "个人信息"
+			}
+		},
+		{
+			"path": "pages/ticket/detail",
+			"style": {
+				"navigationBarTitleText": "鱼票详情",
+				"navigationStyle": "custom"
 			}
 		},
 		{
@@ -56,6 +57,27 @@
 				"navigationBarTitleText": "支付",
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/activity/detail",
+			"style": {
+				"navigationBarTitleText": "活动详情",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/coupon/detail",
+			"style": {
+				"navigationBarTitleText": "优惠券详情",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/achievement/detail",
+			"style": {
+				"navigationBarTitleText": "钓鱼成绩",
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"globalStyle": {
@@ -75,15 +97,15 @@
 		"spacing": "0rpx",
 		"list": [
 			{
-				"pagePath": "pages/index/index",
+				"pagePath": "pages/fishNews/index",
 				"text": "鱼讯"
 			},
 			{
-				"pagePath": "pages/apps/index",
+				"pagePath": "pages/magicFishingBox/index",
 				"text": "神奇钓箱"
 			},
 			{
-				"pagePath": "pages/profile/index",
+				"pagePath": "pages/mine/index",
 				"text": "我的"
 			}
 		]

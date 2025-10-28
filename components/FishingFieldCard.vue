@@ -114,7 +114,7 @@ export default {
 
 /* 钓场名片容器 */
 .fishing-field-card {
-	background: #ffffff;
+	background: #fbfbfb;
 	border-radius: 16rpx;
 	margin: 8rpx; /* 为投影留出空间 */
 	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.12), 0 2rpx 8rpx rgba(0, 0, 0, 0.08);

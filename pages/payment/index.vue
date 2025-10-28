@@ -109,8 +109,35 @@ const generateOrderNumber = () => {
 	return `TK${timestamp}${random}`
 }
 
+// 检查登录状态
+const checkLoginStatus = () => {
+	const savedUserInfo = uni.getStorageSync('userInfo')
+	const savedLoginStatus = uni.getStorageSync('isLoggedIn')
+	
+	if (!savedUserInfo || !savedLoginStatus) {
+		// 未登录，跳转到登录页面
+		uni.showModal({
+			title: '需要登录',
+			content: '请先登录后再进行支付',
+			showCancel: false,
+			success: () => {
+				uni.navigateTo({
+					url: '/pages/mine/auth'
+				})
+			}
+		})
+		return false
+	}
+	return true
+}
+
 // 处理支付
 const handlePayment = () => {
+	// 首先检查登录状态
+	if (!checkLoginStatus()) {
+		return
+	}
+	
 	if (!selectedMethod.value) {
 		uni.showToast({
 			title: '请选择支付方式',

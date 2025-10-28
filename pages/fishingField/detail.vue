@@ -87,7 +87,7 @@
 						<text class="field-tab-text wide-spacing">钓塘</text>
 					</view>
 					<view class="field-tab-button" :class="{ 'active': activeFieldTab === 'activities' }" @click="switchFieldTab('activities')">
-						<text class="field-tab-text">活动&公告</text>
+						<text class="field-tab-text">活动公告</text>
 					</view>
 					<view class="field-tab-button" :class="{ 'active': activeFieldTab === 'champions' }" @click="switchFieldTab('champions')">
 						<text class="field-tab-text wide-spacing">坑冠</text>
@@ -350,14 +350,10 @@ const goToPond = (pond) => {
 
 // 跳转到活动页面
 const goToActivity = (activity) => {
-	uni.showToast({
-		title: `查看${activity.title}`,
-		icon: 'none'
+	console.log('跳转到活动详情页面:', activity)
+	uni.navigateTo({
+		url: `/pages/activity/detail?activityId=${activity.id}&activityTitle=${encodeURIComponent(activity.title)}`
 	})
-	// 这里可以跳转到活动详情页面
-	// uni.navigateTo({
-	//     url: `/pages/activity/detail?activityId=${activity.id}`
-	// })
 }
 
 // 跳转到活动有奖页面
