@@ -111,11 +111,11 @@
       </view>
     </view>
 
-    <!-- 关于鱼讯模块 -->
+    <!-- 关于坑冠大师模块 -->
     <view class="about-section">
       <view class="unified-cell" @click="goToAbout">
         <view class="unified-cell-content">
-          <text class="unified-cell-title">关于鱼讯</text>
+          <text class="unified-cell-title">关于坑冠大师</text>
           <text class="chevron-icon">›</text>
         </view>
       </view>
@@ -455,19 +455,17 @@ const goToAchievementDetail = () => {
 const goToPurchaseRecord = () => {
   // 关闭所有折叠面板
   closeAllCollapsePanels()
-  uni.showToast({
-    title: '购票记录功能开发中',
-    icon: 'none'
+  uni.navigateTo({
+    url: '/pages/purchaseRecord/index'
   })
 }
 
-// 关于鱼讯导航
+// 关于坑冠大师导航
 const goToAbout = () => {
   // 关闭所有折叠面板
   closeAllCollapsePanels()
-  uni.showToast({
-    title: '关于鱼讯功能开发中',
-    icon: 'none'
+  uni.navigateTo({
+    url: '/pages/about/index'
   })
 }
 

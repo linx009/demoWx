@@ -13,6 +13,24 @@
 			}
 		},
 		{
+			"path": "pages/magicFishingBox/csprng/index",
+			"style": {
+				"navigationBarTitleText": "csprng抽号"
+			}
+		},
+		{
+			"path": "pages/magicFishingBox/csprng/detail",
+			"style": {
+				"navigationBarTitleText": "抽号详情"
+			}
+		},
+		{
+			"path": "pages/magicFishingBox/store",
+			"style": {
+				"navigationBarTitleText": "钓场小卖部"
+			}
+		},
+		{
 			"path": "pages/mine/index",
 			"style": {
 				"navigationBarTitleText": "我的"
@@ -76,6 +94,20 @@
 			"path": "pages/achievement/detail",
 			"style": {
 				"navigationBarTitleText": "钓鱼成绩",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/purchaseRecord/index",
+			"style": {
+				"navigationBarTitleText": "购票记录",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/about/index",
+			"style": {
+				"navigationBarTitleText": "关于坑冠大师",
 				"navigationStyle": "custom"
 			}
 		}
